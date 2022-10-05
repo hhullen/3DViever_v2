@@ -5,8 +5,8 @@ using std::cout;
 
 int main() {
   S21::ModelFrame m;
-  // string pth = "/Users/hhullen/cube.obj";
-  string pth = "/Users/hhullen/PROJECTS/99others/models/one_million.obj";
+  string pth = "/Users/hhullen/cube.obj";
+  // string pth = "/Users/hhullen/PROJECTS/99others/models/one_million.obj";
   bool is_load = m.UploadModel(pth);
   cout << "facets " << m.get_facets_amount() << "\n";
   cout << "indices " << m.get_indices_amount() << "\n";
