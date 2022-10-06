@@ -1,4 +1,4 @@
-#include "model_frame_loader.h"
+#include "model_frame.h"
 
 namespace S21 {
 
