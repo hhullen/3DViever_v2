@@ -61,13 +61,8 @@ void ModelFrame::UploadVertexes(Vertexes *data) {
 
   file.open(*file_path_);
   if (file.is_open()) {
-    while (!file.eof()) {
-      if (line == "v") {
-        file >> line;
-        ReadVertex(file, *data, line);
-      } else {
-        file >> line;
-      }
+    while (!getline(file, line, '\n').eof()) {
+      ReadVertex(*data, line);
     }
     file.close();
   }
@@ -76,10 +71,14 @@ void ModelFrame::UploadVertexes(Vertexes *data) {
   }
 }
 
-void ModelFrame::ReadVertex(ifstream &file, Vertexes &data, string &line) {
-  while ((IsAsciiDigit(line[0]) || line[0] == '-') && !file.eof()) {
-    data.vertexes.push_back(stod(line));
-    file >> line;
+void ModelFrame::ReadVertex(Vertexes &data, string &line) {
+  double x, y, z;
+
+  if (line[0] == 'v' && line[1] == ' ') {
+    sscanf(line.data(), "v %lf %lf %lf", &x, &y, &z);
+    data.vertexes.push_back(x);
+    data.vertexes.push_back(y);
+    data.vertexes.push_back(z);
   }
 }
 
@@ -108,32 +107,30 @@ void ModelFrame::UploadFacets(Facets *data) {
 
   file.open(*file_path_);
   if (file.is_open()) {
-    while (!file.eof()) {
-      if (line == "f") {
-        file >> line;
-        ReadFacet(file, *data, line);
+    while (!getline(file, line, '\n').eof()) {
+      if (line[0] == 'f' && line[1] == ' ') {
+        ReadFacet(*data, line);
         ++(*data).facets_n;
-      } else {
-        file >> line;
       }
     }
     file.close();
   }
 }
 
-void ModelFrame::ReadFacet(ifstream &file, Facets &data, string &line) {
+void ModelFrame::ReadFacet(Facets &data, string &line) {
+  size_t line_zise = line.size();
   unsigned int first_index = 0;
+  bool is_first_index = true;
 
-  if (IsAsciiDigit(line[0]) && !file.eof()) {
-    first_index = stod(line) - 1;
-    data.indices.push_back(first_index);
-  }
-  file >> line;
-
-  while (IsAsciiDigit(line[0]) && !file.eof()) {
-    data.indices.push_back(stod(line) - 1);
-    data.indices.push_back(data.indices.back());
-    file >> line;
+  for (size_t i = 2; i < line_zise; ++i) {
+    if (!is_first_index && line[i - 1] == ' ' && IsAsciiDigit(line[i])) {
+      data.indices.push_back(stod(&line.data()[i]) - 1);
+      data.indices.push_back(data.indices.back());
+    } else if (is_first_index && line[i - 1] == ' ' && IsAsciiDigit(line[i])) {
+      first_index = stod(&line.data()[i]) - 1;
+      data.indices.push_back(first_index);
+      is_first_index = false;
+    }
   }
   data.indices.push_back(first_index);
 }

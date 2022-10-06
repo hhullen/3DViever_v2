@@ -6,9 +6,10 @@
 #include <thread>
 #include <vector>
 
+using std::getline;
 using std::ifstream;
+using std::sscanf;
 using std::stod;
-using std::stoi;
 using std::string;
 using std::thread;
 using std::vector;
@@ -47,10 +48,10 @@ class ModelFrame {
   string *file_path_;
 
   void UploadVertexes(Vertexes *data);
-  void ReadVertex(ifstream &file, Vertexes &data, string &line);
+  void ReadVertex(Vertexes &data, string &line);
   void SearcMaxMin(Vertexes &data);
   void UploadFacets(Facets *data);
-  void ReadFacet(ifstream &file, Facets &data, string &line);
+  void ReadFacet(Facets &data, string &line);
   bool IsAsciiDigit(const char &sym);
   void SetDefaultValues();
   bool IsCorrectModel();
