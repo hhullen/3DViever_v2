@@ -34,19 +34,20 @@ class MainWindow : public QMainWindow {
  signals:
 
  private slots:
-  void SteerPanelClosed(bool state);
-  void ManageSteerPanel(bool state);
-  void CloseApp(bool state);
-  void OpenNewFile();
+  void SteerPanelClosedSlot(bool state);
+  void ManageSteerPanelSlot(bool state);
+  void CloseAppSlot(bool state);
+  void OpenNewFileSlot();
   void keyPressEvent(QKeyEvent *event);
   void keyReleaseEvent(QKeyEvent *event);
-  void ManageTransformPanel(bool state);
-  void ManageViewSetupPanel(bool state);
-  void ManageScreenCapturePanel(bool state);
+  void ManageTransformPanelSlot(bool state);
+  void ManageViewSetupPanelSlot(bool state);
+  void ManageScreenCapturePanelSlot(bool state);
   void GetScreenShot();
   void GetGif();
   void AddGifFrame();
-  void UpdateTransformation();
+  void UpdateTransformationSlot();
+  void UpdateViewSlot();
 
  private:
   Ui::MainWindow *ui_;

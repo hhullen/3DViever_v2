@@ -102,7 +102,18 @@ void MainWindow::AddGifFrame() {
     //  }
 }
 
-void MainWindow::UpdateTransformation() {
+void MainWindow::UpdateViewSlot() {
+    qDebug() << "bgc" << view_panel_->get_background_color();
+    qDebug() << "eco" << view_panel_->get_edges_color();
+    qDebug() << "esi" << view_panel_->get_edges_size();
+    qDebug() << "est" << view_panel_->get_edges_style();
+    qDebug() << "vco" << view_panel_->get_vertex_color();
+    qDebug() << "vsi" << view_panel_->get_vertex_size();
+    qDebug() << "vst" << view_panel_->get_vertex_style();
+    qDebug() << "prj" << view_panel_->get_projection_type();
+}
+
+void MainWindow::UpdateTransformationSlot() {
     double x, y, z;
     transform_panel_->get_position(&x, &y, &z);
     qDebug() << "pos" << x << " " << y << " " << z;
@@ -128,30 +139,30 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event) {
   //  if (event->key() == Qt::Key_Space) glview->key_space = false;
 }
 
-void MainWindow::ManageTransformPanel(bool state) {
+void MainWindow::ManageTransformPanelSlot(bool state) {
     transform_panel_->setVisible(state);
 }
 
-void MainWindow::ManageViewSetupPanel(bool state) {
+void MainWindow::ManageViewSetupPanelSlot(bool state) {
     view_panel_->setVisible(state);
 }
 
-void MainWindow::ManageScreenCapturePanel(bool state) {
+void MainWindow::ManageScreenCapturePanelSlot(bool state) {
   //  screenCap->setVisible(state);
 }
 
-void MainWindow::SteerPanelClosed(bool state) {
+void MainWindow::SteerPanelClosedSlot(bool state) {
   ui_->actionSteer_panel->setChecked(state);
 }
 
-void MainWindow::ManageSteerPanel(bool state) {
+void MainWindow::ManageSteerPanelSlot(bool state) {
   ui_->dock_widget->setVisible(state);
   ui_->dock_widget->setFloating(false);
 }
 
-void MainWindow::CloseApp(bool state) { QApplication::quit(); }
+void MainWindow::CloseAppSlot(bool state) { QApplication::quit(); }
 
-void MainWindow::OpenNewFile() {
+void MainWindow::OpenNewFileSlot() {
   file_path_ = QFileDialog::getOpenFileName(this, "Open .obj file", "/Users",
                                             "obj (*.obj);;");
   qDebug() << file_path_;
@@ -208,26 +219,26 @@ void MainWindow::AddSteeringWidgetsToDockPanel() {
 }
 
 void MainWindow::ConnectSignalSlot() {
-  connect(ui_->dock_widget, SIGNAL(visibilityChanged(bool)), this,
-          SLOT(SteerPanelClosed(bool)));
-  connect(ui_->actionSteer_panel, SIGNAL(triggered(bool)), this,
-          SLOT(ManageSteerPanel(bool)));
-  connect(ui_->action_close, SIGNAL(triggered(bool)), this,
-          SLOT(CloseApp(bool)));
-  connect(ui_->action_transform, SIGNAL(triggered(bool)), this,
-          SLOT(ManageTransformPanel(bool)));
-  connect(ui_->action_setup_view, SIGNAL(triggered(bool)), this,
-          SLOT(ManageViewSetupPanel(bool)));
-  connect(ui_->action_screen_capture, SIGNAL(triggered(bool)), this,
-          SLOT(ManageScreenCapturePanel(bool)));
-  connect(ui_->action_open_new, SIGNAL(triggered(bool)), this,
-          SLOT(OpenNewFile()));
+  connect(ui_->dock_widget, &QDockWidget::visibilityChanged, this,
+          &MainWindow::SteerPanelClosedSlot);
+  connect(ui_->actionSteer_panel, &QAction::triggered, this,
+          &MainWindow::ManageSteerPanelSlot);
+  connect(ui_->action_close, &QAction::triggered, this,
+          &MainWindow::CloseAppSlot);
+  connect(ui_->action_transform, &QAction::triggered, this,
+          &MainWindow::ManageTransformPanelSlot);
+  connect(ui_->action_setup_view, &QAction::triggered, this,
+          &MainWindow::ManageViewSetupPanelSlot);
+  connect(ui_->action_screen_capture, &QAction::triggered, this,
+          &MainWindow::ManageScreenCapturePanelSlot);
+  connect(ui_->action_open_new, &QAction::triggered, this,
+          &MainWindow::OpenNewFileSlot);
   //  connect(this, SIGNAL(model_uploaded(model_t *)), glview,
   //          SLOT(draw_model(model_t *)));
-    connect(transform_panel_, SIGNAL(DataUpdatedSignal()), this,
-            SLOT(UpdateTransformation()));
-  //  connect(viewSetup, SIGNAL(data_updated(double, int)), this,
-  //          SLOT(update_view(double, int)));
+    connect(transform_panel_, &PTransform::DataUpdatedSignal, this,
+          &MainWindow::UpdateTransformationSlot);
+    connect(view_panel_, &ViewSetup::DataUpdatedSignal, this,
+            &MainWindow::UpdateViewSlot);
   //  connect(this, SIGNAL(redraw()), glview, SLOT(update_frame()));
   //  connect(screenCap, SIGNAL(take_screenshot()), this,
   //  SLOT(get_screen_shot())); connect(screenCap, SIGNAL(record_gif()), this,

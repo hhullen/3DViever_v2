@@ -5,11 +5,10 @@
 #include <QLabel>
 #include <QStyle>
 #include <QWidget>
+#include <QSettings>
 #include "enum_parameters.h"
 
-namespace Ui {
-class ViewSetup;
-}
+namespace Ui { class ViewSetup; }
 
 namespace S21 {
 
@@ -19,14 +18,21 @@ class ViewSetup : public QWidget {
  public:
   explicit ViewSetup(QWidget *parent = nullptr);
   ~ViewSetup();
+    ProjectionType get_projection_type();
+    EdgeStyle get_edges_style();
+    QColor get_edges_color();
+    int get_edges_size();
+    VertexStyle get_vertex_style();
+    QColor get_vertex_color();
+    int get_vertex_size();
+    QColor get_background_color();
+
 
  signals:
     void DataUpdatedSignal();
 
  private slots:
-    void GetProjectionStyleSlot(int index);
-    void GetEdgeStyleSlot(int index);
-    void GetVertexStyleSlot(int index);
+    void ManageVertexStyleDependenciesSlot(int index);
     void ChooseEdgeColorSlot();
     void ChooseVertexColorSlot();
     void ChooseBackgroundColorSlot();
@@ -34,17 +40,17 @@ class ViewSetup : public QWidget {
 
  private:
   Ui::ViewSetup *ui_;
+  QSettings *settings_;
 
   QColor vertex_color_;
-  QColor backg_color_;
+  QColor background_color_;
   QColor edge_color_;
-  ProjectionType projection_type_;
-  VertexStyle vertex_style_;
-  EdgeStyle edge_style_;
-//  int vertex_size_;
-//  int edge_size_;
 
+  void SetColor(QColor color, QColor *var, QPushButton *btn);
+  QColor GetNewColor(QPushButton *btn, QLabel *txt, QColor col);
   void ShowChosenColorInfo(QPushButton *btn, QLabel *txt, QColor col);
+  void SaveSettings();
+  void UploadSettings();
   void ConnectSignalSlot();
 };
 

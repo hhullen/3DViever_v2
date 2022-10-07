@@ -3,9 +3,9 @@
 
 namespace S21 {
 
-enum class ProjectionType { ORTHOGONAL, PERSPECTIVE };
-enum class EdgeStyle { SOLID, STIPPLE };
-enum class VertexStyle { ROUND, SQUARE, NONE };
+enum  ProjectionType { ORTHOGONAL, PERSPECTIVE };
+enum  EdgeStyle { SOLID, STIPPLE };
+enum  VertexStyle { ROUND, SQUARE, NONE };
 
 }
 

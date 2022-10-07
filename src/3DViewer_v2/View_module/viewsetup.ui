@@ -126,6 +126,7 @@
 	background-color: rgba(0, 0, 0, 0.0);
 	color: rgba(255, 255, 255, 0.7);
 	border: 1px solid rgba(255, 255, 255, 0);
+	selection-background-color: rgba(255, 255, 255, 30);
 }</string>
    </property>
    <item>
@@ -159,6 +160,7 @@
 	background-color: rgba(0, 0, 0, 0.0);
 	color: rgba(255, 255, 255, 0.7);
 	border: 1px solid rgba(255, 255, 255, 0);
+	selection-background-color: rgba(255, 255, 255, 30);
 }</string>
    </property>
    <item>
@@ -301,15 +303,15 @@
    <property name="geometry">
     <rect>
      <x>9</x>
-     <y>210</y>
-     <width>20</width>
-     <height>20</height>
+     <y>207</y>
+     <width>26</width>
+     <height>26</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
-     <width>2</width>
-     <height>20</height>
+     <width>26</width>
+     <height>26</height>
     </size>
    </property>
    <property name="font">
@@ -320,7 +322,7 @@
    <property name="styleSheet">
     <string notr="true">QPushButton {
 	border: 2px solid rgba(90, 90, 90, 0.6);
-	border-radius: 10px;
+	border-radius: 13px;
 	background-color: rgba(100, 100, 100, 1.0);
 	color: rgba(0, 0, 0, 0);
 }
@@ -538,15 +540,15 @@ QPushButton:pressed {
    <property name="geometry">
     <rect>
      <x>9</x>
-     <y>410</y>
-     <width>20</width>
-     <height>20</height>
+     <y>407</y>
+     <width>26</width>
+     <height>26</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
-     <width>20</width>
-     <height>20</height>
+     <width>26</width>
+     <height>26</height>
     </size>
    </property>
    <property name="font">
@@ -557,7 +559,7 @@ QPushButton:pressed {
    <property name="styleSheet">
     <string notr="true">QPushButton {
 	border: 2px solid rgba(90, 90, 90, 0.6);
-	border-radius: 10px;
+	border-radius: 13px;
 	background-color: rgba(100, 100, 100, 1.0);
 	color: rgba(0, 0, 0, 0);
 }
@@ -778,6 +780,7 @@ QPushButton:pressed {
 	background-color: rgba(0, 0, 0, 0.0);
 	color: rgba(255, 255, 255, 0.7);
 	border: 1px solid rgba(255, 255, 255, 0);
+	selection-background-color: rgba(255, 255, 255, 30);
 }</string>
    </property>
    <item>
@@ -869,15 +872,15 @@ QPushButton:pressed {
    <property name="geometry">
     <rect>
      <x>9</x>
-     <y>550</y>
-     <width>20</width>
-     <height>20</height>
+     <y>547</y>
+     <width>26</width>
+     <height>26</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
-     <width>20</width>
-     <height>20</height>
+     <width>26</width>
+     <height>26</height>
     </size>
    </property>
    <property name="font">
@@ -888,7 +891,7 @@ QPushButton:pressed {
    <property name="styleSheet">
     <string notr="true">QPushButton {
 	border: 2px solid rgba(90, 90, 90, 0.6);
-	border-radius: 10px;
+	border-radius: 13px;
 	background-color: rgba(100, 100, 100, 1.0);
 	color: rgba(0, 0, 0, 0);
 }

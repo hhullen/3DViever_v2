@@ -188,91 +188,91 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/viewsetup.ui" line="133"/>
+        <location filename="View_module/viewsetup.ui" line="134"/>
         <source>Orthogonal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/viewsetup.ui" line="138"/>
+        <location filename="View_module/viewsetup.ui" line="139"/>
         <source>Perspective</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/viewsetup.ui" line="166"/>
+        <location filename="View_module/viewsetup.ui" line="168"/>
         <source>Solid</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/viewsetup.ui" line="171"/>
+        <location filename="View_module/viewsetup.ui" line="173"/>
         <source>Stippled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/viewsetup.ui" line="228"/>
+        <location filename="View_module/viewsetup.ui" line="230"/>
         <source>Edges style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/viewsetup.ui" line="284"/>
+        <location filename="View_module/viewsetup.ui" line="286"/>
         <source>Edges color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/viewsetup.ui" line="334"/>
-        <location filename="View_module/viewsetup.ui" line="571"/>
-        <location filename="View_module/viewsetup.ui" line="902"/>
+        <location filename="View_module/viewsetup.ui" line="336"/>
+        <location filename="View_module/viewsetup.ui" line="573"/>
+        <location filename="View_module/viewsetup.ui" line="905"/>
         <source>⬤</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/viewsetup.ui" line="390"/>
-        <location filename="View_module/viewsetup.ui" line="646"/>
-        <location filename="View_module/viewsetup.ui" line="958"/>
+        <location filename="View_module/viewsetup.ui" line="392"/>
+        <location filename="View_module/viewsetup.ui" line="648"/>
+        <location filename="View_module/viewsetup.ui" line="961"/>
         <source>R: 100; G: 100; B: 100;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/viewsetup.ui" line="446"/>
+        <location filename="View_module/viewsetup.ui" line="448"/>
         <source>Edges size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/viewsetup.ui" line="534"/>
+        <location filename="View_module/viewsetup.ui" line="536"/>
         <source>Vertexes style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/viewsetup.ui" line="702"/>
+        <location filename="View_module/viewsetup.ui" line="704"/>
         <source>Vertexes size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/viewsetup.ui" line="758"/>
+        <location filename="View_module/viewsetup.ui" line="760"/>
         <source>Vertexes color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/viewsetup.ui" line="785"/>
+        <location filename="View_module/viewsetup.ui" line="788"/>
         <source>Round</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/viewsetup.ui" line="790"/>
+        <location filename="View_module/viewsetup.ui" line="793"/>
         <source>Square</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/viewsetup.ui" line="795"/>
+        <location filename="View_module/viewsetup.ui" line="798"/>
         <source>None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/viewsetup.ui" line="865"/>
+        <location filename="View_module/viewsetup.ui" line="868"/>
         <source>Background color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/viewsetup.ui" line="1007"/>
+        <location filename="View_module/viewsetup.ui" line="1010"/>
         <source>Reset view</source>
         <translation type="unfinished"></translation>
     </message>
