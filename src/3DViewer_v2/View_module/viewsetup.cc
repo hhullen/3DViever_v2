@@ -6,12 +6,15 @@ namespace S21 {
 
 ViewSetup::ViewSetup(QWidget *parent) : QWidget(parent), ui_(new Ui::ViewSetup) {
   ui_->setupUi(this);
+  settings_ = new QSettings("hhullen21", "3D Viewer v2", this);
+  UploadSettings();
   ConnectSignalSlot();
 }
 
 ViewSetup::~ViewSetup() {
     SaveSettings();
-    delete ui_; }
+    delete ui_;
+}
 
 ProjectionType ViewSetup::get_projection_type() {
     return (ProjectionType)ui_->cb_projection_style->currentIndex();
@@ -132,18 +135,20 @@ void ViewSetup::SaveSettings() {
 }
 
 void ViewSetup::UploadSettings() {
+    QVariant temp;
       ui_->cb_projection_style->setCurrentIndex(settings_->value("projection_type").toInt());
-    //  glview->edge_style = settings->value("edge_style").toInt();
-    //  glview->vertex_style = settings->value("vertex_style").toInt();
-    //  QVariant bgCol = settings->value("background_color");
-    //  glview->background_color = bgCol.value<QColor>();
-    //  QVariant vertCol = settings->value("vertexes_color");
-    //  glview->vertexes_color = vertCol.value<QColor>();
-    //  QVariant edgeCol = settings->value("edges_color");
-    //  glview->edges_color = edgeCol.value<QColor>();
-    //  glview->edge_size = settings->value("edge_size").toInt();
-    //  glview->vertex_size = settings->value("vertex_size").toInt();
-    //  folder_path = settings->value("screen_path").toString();
+      ui_->cb_edge_style->setCurrentIndex(settings_->value("edge_style").toInt());
+      ui_->cb_vertex_style->setCurrentIndex(settings_->value("vertex_style").toInt());
+
+      temp = settings_->value("background_color");
+      SetColor(temp.value<QColor>(), &background_color_, ui_->palette_background);
+      temp = settings_->value("vertexes_color");
+    SetColor(temp.value<QColor>(), &vertex_color_, ui_->palette_vertex);
+      temp = settings_->value("edges_color");
+    SetColor(temp.value<QColor>(), &edge_color_, ui_->palette_edge);
+
+      ui_->hs_edge_size->setValue(settings_->value("edge_size").toInt());
+      ui_->hs_vertex_size->setValue(settings_->value("vertex_size").toInt());
 }
 
 void ViewSetup::ConnectSignalSlot() {
