@@ -32,6 +32,14 @@ double ModelFrame::get_min_value(Axis axis) {
   return vertexes_.min_values[axis];
 }
 
+const vector<double> *ModelFrame::get_vertexes_vector() {
+  return &vertexes_.vertexes;
+}
+
+const vector<unsigned int> *ModelFrame::get_indices_vector() {
+  return &facets_.indices;
+}
+
 bool ModelFrame::UploadModel(string file_path) {
   bool returnable = false;
   thread *vertexes_thread;

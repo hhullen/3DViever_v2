@@ -23,8 +23,8 @@ class PTransform : public QWidget {
   void set_angle(double *x, double *y, double *z);
   void set_scale(double scale);
 
-signals:
- void DataUpdatedSignal();
+ signals:
+  void DataUpdatedSignal();
 
  private slots:
   void ResetSlot();
@@ -34,6 +34,6 @@ signals:
   void ConnectSignalSlot();
 };
 
-}
+}  // namespace S21
 
 #endif  // PTRANSFORM_H

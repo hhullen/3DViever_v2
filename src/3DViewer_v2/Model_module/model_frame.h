@@ -33,6 +33,8 @@ class ModelFrame {
   unsigned int get_indices_amount();
   double get_max_value(Axis axis);
   double get_min_value(Axis axis);
+  const vector<double> *get_vertexes_vector();
+  const vector<unsigned int> *get_indices_vector();
 
   static void Move(ModelFrame &model, Axis axis, double offset) {
     unsigned int vertexes_values = model.get_vertexes_amount() * 3;
