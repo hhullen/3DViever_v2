@@ -25,7 +25,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="labelPanelName">
+  <widget class="QLabel" name="label_panel_name">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -41,11 +41,16 @@
      <bold>true</bold>
     </font>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+	background-color: rgba(243, 249, 255, 10);
+}</string>
+   </property>
    <property name="text">
     <string>   Screen capture</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="BtnScreenShot">
+  <widget class="QPushButton" name="btn_screenshot">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -59,6 +64,9 @@
      <family>.AppleSystemUIFont</family>
      <pointsize>36</pointsize>
     </font>
+   </property>
+   <property name="toolTip">
+    <string>Take screenshot</string>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton {
@@ -76,7 +84,7 @@ QPushButton:pressed {
     <string>📸</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="BtnREC">
+  <widget class="QPushButton" name="btn_record">
    <property name="geometry">
     <rect>
      <x>70</x>
@@ -90,6 +98,9 @@ QPushButton:pressed {
      <family>.AppleSystemUIFont</family>
      <pointsize>30</pointsize>
     </font>
+   </property>
+   <property name="toolTip">
+    <string>Record GIF</string>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton {
@@ -107,7 +118,7 @@ QPushButton:pressed {
     <string>⬤</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="BtnOpenFolder">
+  <widget class="QPushButton" name="btn_open_folder">
    <property name="geometry">
     <rect>
      <x>120</x>
@@ -122,6 +133,9 @@ QPushButton:pressed {
      <pointsize>34</pointsize>
      <bold>true</bold>
     </font>
+   </property>
+   <property name="toolTip">
+    <string>Open media folder</string>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton {
@@ -140,7 +154,7 @@ QPushButton:pressed {
     <string>📁</string>
    </property>
   </widget>
-  <widget class="Line" name="line_1">
+  <widget class="Line" name="separator_1">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -158,7 +172,7 @@ QPushButton:pressed {
     <enum>Qt::Horizontal</enum>
    </property>
   </widget>
-  <widget class="QPushButton" name="BtnFolderPath">
+  <widget class="QPushButton" name="btn_folder_path">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -167,11 +181,26 @@ QPushButton:pressed {
      <height>21</height>
     </rect>
    </property>
+   <property name="minimumSize">
+    <size>
+     <width>161</width>
+     <height>21</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>161</width>
+     <height>21</height>
+    </size>
+   </property>
    <property name="font">
     <font>
      <family>.AppleSystemUIFont</family>
      <pointsize>14</pointsize>
     </font>
+   </property>
+   <property name="toolTip">
+    <string>Choose media path</string>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton {
@@ -189,7 +218,7 @@ QPushButton:pressed {
     <string>Path</string>
    </property>
   </widget>
-  <widget class="QLabel" name="labelFolderPath">
+  <widget class="QLabel" name="label_folder_path">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -242,10 +271,10 @@ QPushButton:pressed {
     </font>
    </property>
    <property name="text">
-    <string>Folder to save..</string>
+    <string>Folder to save media..</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="CBFileType">
+  <widget class="QComboBox" name="cb_screenshot_type">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -261,11 +290,15 @@ QPushButton:pressed {
      <bold>true</bold>
     </font>
    </property>
+   <property name="toolTip">
+    <string>Choose screenshot format</string>
+   </property>
    <property name="styleSheet">
     <string notr="true">QComboBox {
 	background-color: rgba(0, 0, 0, 0.0);
 	color: rgba(255, 255, 255, 0.7);
 	border: 1px solid rgba(255, 255, 255, 0);
+	selection-background-color: rgba(255, 255, 255, 30);
 }</string>
    </property>
    <item>
@@ -279,7 +312,7 @@ QPushButton:pressed {
     </property>
    </item>
   </widget>
-  <widget class="QLabel" name="labelFolderPath_2">
+  <widget class="QLabel" name="label_screenshot_type">
    <property name="geometry">
     <rect>
      <x>10</x>

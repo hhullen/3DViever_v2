@@ -9,13 +9,12 @@ MainWindow::MainWindow(ViewerController *controller, QWidget *parent)
   ui_->setupUi(this);
   transform_panel_ = new PTransform();
   view_panel_ = new ViewSetup();
+  screen_cap_ = new ScreenCap();
 
   view_panel_->setVisible(false);
+  screen_cap_->setVisible(false);
 
   name_pattern_.setPattern("[^\\/]*$");
-  //  date_time_ = new QDateTime();
-
-  //  settings = new QSettings("hhullen21", "3D Viewer 1.0", this);
 
   ui_->dock_widget->hide();
   ui_->statusbar->setToolTip("HELLO MF!");
@@ -27,38 +26,12 @@ MainWindow::MainWindow(ViewerController *controller, QWidget *parent)
 }
 
 MainWindow::~MainWindow() {
-  SaveSettings();
   delete ui_;
 }
 
-void MainWindow::SaveSettings() {
-  //  settings->setValue("projection_type", glview->projection_type);
-  //  settings->setValue("edge_style", glview->edge_style);
-  //  settings->setValue("vertex_style", glview->vertex_style);
-  //  settings->setValue("background_color", glview->background_color);
-  //  settings->setValue("vertexes_color", glview->vertexes_color);
-  //  settings->setValue("edges_color", glview->edges_color);
-  //  settings->setValue("edge_size", glview->edge_size);
-  //  settings->setValue("vertex_size", glview->vertex_size);
-  //  settings->setValue("screen_path", screenCap->files_path);
-}
-
-void MainWindow::UploadSettings() {
-  //  glview->projection_type = settings->value("projection_type").toInt();
-  //  glview->edge_style = settings->value("edge_style").toInt();
-  //  glview->vertex_style = settings->value("vertex_style").toInt();
-  //  QVariant bgCol = settings->value("background_color");
-  //  glview->background_color = bgCol.value<QColor>();
-  //  QVariant vertCol = settings->value("vertexes_color");
-  //  glview->vertexes_color = vertCol.value<QColor>();
-  //  QVariant edgeCol = settings->value("edges_color");
-  //  glview->edges_color = edgeCol.value<QColor>();
-  //  glview->edge_size = settings->value("edge_size").toInt();
-  //  glview->vertex_size = settings->value("vertex_size").toInt();
-  //  folder_path = settings->value("screen_path").toString();
-}
-
-void MainWindow::GetScreenShot() {
+void MainWindow::GetScreenShotSlot() {
+    qDebug() << screen_cap_->get_screenshot_type();
+    qDebug() << "SCREEN" << screen_cap_->get_media_path();
   //  if (!screenCap->files_path.isEmpty()) {
   //    QImage img = glview->grabFramebuffer();
   //    get_media_name(&file_name);
@@ -74,7 +47,8 @@ void MainWindow::GetScreenShot() {
   //  }
 }
 
-void MainWindow::GetGif() {
+void MainWindow::GetGifSlot() {
+    qDebug() << "GIF" << screen_cap_->get_media_path();
   //  if (!screenCap->files_path.isEmpty() && !recording) {
   //    recording = true;
   //    miliseconds = 0;
@@ -148,7 +122,7 @@ void MainWindow::ManageViewSetupPanelSlot(bool state) {
 }
 
 void MainWindow::ManageScreenCapturePanelSlot(bool state) {
-  //  screenCap->setVisible(state);
+    screen_cap_->setVisible(state);
 }
 
 void MainWindow::SteerPanelClosedSlot(bool state) {
@@ -182,7 +156,7 @@ void MainWindow::OpenNewFileSlot() {
 void MainWindow::SetSteerPanelComponentsAvailability(bool state) {
     transform_panel_->setDisabled(!state);
     view_panel_->setDisabled(!state);
-  //  screenCap->setDisabled(!state);
+    screen_cap_->setDisabled(!state);
 }
 
 void MainWindow::SetModelInfo() {
@@ -198,24 +172,13 @@ void MainWindow::SetModelInfo() {
   ui_->statusbar->showMessage(status_bar_info);
 }
 
-// void MainWindow::ResetViewSetup() {
-//   glview->projection_type = ORTHO;
-//   glview->edge_style = SOLID;
-//   glview->vertex_style = ROUND;
-//   glview->background_color = Qt::white;
-//   glview->vertexes_color = Qt::black;
-//   glview->edges_color = Qt::gray;
-//   glview->edge_size = 2;
-//   glview->vertex_size = 2;
-// }
-
 void MainWindow::AddSteeringWidgetsToDockPanel() {
   ui_->scroll_area_contents->layout()->setAlignment(Qt::AlignTop |
                                                     Qt::AlignLeft);
   ui_->scroll_area_contents->layout()->setSpacing(0);
     ui_->scroll_area_contents->layout()->addWidget(transform_panel_);
     ui_->scroll_area_contents->layout()->addWidget(view_panel_);
-  //  ui_->scrollAreaWidgetContents->layout()->addWidget(screenCap);
+    ui_->scroll_area_contents->layout()->addWidget(screen_cap_);
 }
 
 void MainWindow::ConnectSignalSlot() {
@@ -240,9 +203,9 @@ void MainWindow::ConnectSignalSlot() {
     connect(view_panel_, &ViewSetup::DataUpdatedSignal, this,
             &MainWindow::UpdateViewSlot);
   //  connect(this, SIGNAL(redraw()), glview, SLOT(update_frame()));
-  //  connect(screenCap, SIGNAL(take_screenshot()), this,
-  //  SLOT(get_screen_shot())); connect(screenCap, SIGNAL(record_gif()), this,
-  //  SLOT(get_gif()));
+    connect(screen_cap_, &ScreenCap::TakeScreenshotSignal, this,
+    &MainWindow::GetScreenShotSlot);
+    connect(screen_cap_, &ScreenCap::RecordGifSignal, this, &MainWindow::GetGifSlot);
 }
 
 }  // namespace S21

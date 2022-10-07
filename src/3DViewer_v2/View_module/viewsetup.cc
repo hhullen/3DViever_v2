@@ -6,7 +6,7 @@ namespace S21 {
 
 ViewSetup::ViewSetup(QWidget *parent) : QWidget(parent), ui_(new Ui::ViewSetup) {
   ui_->setupUi(this);
-  settings_ = new QSettings("hhullen21", "3D Viewer v2", this);
+  settings_ = new QSettings("ViewSetup", "ViewSettings", this);
   UploadSettings();
   ConnectSignalSlot();
 }
@@ -49,13 +49,13 @@ QColor ViewSetup::get_background_color() {
 }
 
 void ViewSetup::ManageVertexStyleDependenciesSlot(int index) {
-    if (index == 0) {
+    if (index == VertexStyle::ROUND) {
         ui_->palette_vertex->setDisabled(false);
         ui_->hs_vertex_size->setDisabled(false);
-    } else if (index == 1) {
+    } else if (index == VertexStyle::SQUARE) {
         ui_->palette_vertex->setDisabled(false);
         ui_->hs_vertex_size->setDisabled(false);
-    } else if (index == 2) {
+    } else if (index == VertexStyle::NONE) {
         ui_->palette_vertex->setDisabled(true);
         ui_->hs_vertex_size->setDisabled(true);
     }
@@ -142,10 +142,13 @@ void ViewSetup::UploadSettings() {
 
       temp = settings_->value("background_color");
       SetColor(temp.value<QColor>(), &background_color_, ui_->palette_background);
+      ShowChosenColorInfo(ui_->palette_background, ui_->label_background_rgb, background_color_);
       temp = settings_->value("vertexes_color");
     SetColor(temp.value<QColor>(), &vertex_color_, ui_->palette_vertex);
+    ShowChosenColorInfo(ui_->palette_vertex, ui_->label_vertex_rgb, vertex_color_);
       temp = settings_->value("edges_color");
     SetColor(temp.value<QColor>(), &edge_color_, ui_->palette_edge);
+    ShowChosenColorInfo(ui_->palette_edge, ui_->label_edge_rgb, edge_color_);
 
       ui_->hs_edge_size->setValue(settings_->value("edge_size").toInt());
       ui_->hs_vertex_size->setValue(settings_->value("vertex_size").toInt());

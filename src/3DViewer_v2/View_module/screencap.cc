@@ -2,42 +2,87 @@
 
 #include "ui_screencap.h"
 
-ScreenCap::ScreenCap(QWidget *parent) : QWidget(parent), ui(new Ui::ScreenCap) {
-  ui->setupUi(this);
+namespace S21 {
 
-  name_pattern.setPattern("[^\\/]*$");
-  ui->BtnFolderPath->setText(files_path);
+ScreenCap::ScreenCap(QWidget *parent) : QWidget(parent), ui_(new Ui::ScreenCap) {
+  ui_->setupUi(this);
+  name_pattern_.setPattern("[^\\/]*$");
+  settings_ = new QSettings("ScreenCapture", "FilePath", this);
+  UploadSettings();
 
-  connect(ui->BtnFolderPath, SIGNAL(clicked()), this, SLOT(choose_dir()));
-  connect(ui->BtnOpenFolder, SIGNAL(clicked()), this, SLOT(open_folder()));
-  connect(ui->CBFileType, SIGNAL(currentIndexChanged(int)), this,
-          SLOT(change_screen_type(int)));
-  connect(ui->BtnScreenShot, SIGNAL(clicked()), this, SLOT(screenshot()));
-  connect(ui->BtnREC, SIGNAL(clicked()), this, SLOT(gif()));
+    ConnectSignalSlot();
 }
 
-ScreenCap::~ScreenCap() { delete ui; }
-
-void ScreenCap::set_path_button() {
-  match = name_pattern.match(files_path);
-  ui->BtnFolderPath->setText(match.captured());
+ScreenCap::~ScreenCap() {
+    SaveSettings();
+    delete ui_;
 }
 
-void ScreenCap::choose_dir() {
-  files_path = QFileDialog::getExistingDirectory(
+QString ScreenCap::get_media_path() {
+    return files_path_;
+}
+
+ScreenshotFile ScreenCap::get_screenshot_type() {
+    return (ScreenshotFile)ui_->cb_screenshot_type->currentIndex();
+}
+
+void ScreenCap::SetPathToButtonName() {
+  QRegularExpressionMatch match = name_pattern_.match(files_path_);
+  ui_->btn_folder_path->setText(match.captured());
+}
+
+void ScreenCap::ChooseDirectory() {
+    QString temp = QFileDialog::getExistingDirectory(
       this, "Choose folder to save screen", "/Users",
       QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-  set_path_button();
+    if (!temp.isEmpty() && temp != "0") {
+        files_path_ = temp;
+        SetPathToButtonName();
+    }
 }
 
-void ScreenCap::open_folder() {
-  if (!files_path.isEmpty()) {
-    QDesktopServices::openUrl(QUrl::fromLocalFile(files_path));
+void ScreenCap::OpenMediaFolder() {
+  CheckMediaPath();
+  if (!files_path_.isEmpty() && files_path_ != "0") {
+    QDesktopServices::openUrl(QUrl::fromLocalFile(files_path_));
   }
 }
 
-void ScreenCap::change_screen_type(int index) { file_type = index; }
+void ScreenCap::TakeScreenshotSlot() {
+    CheckMediaPath();
+    if (!files_path_.isEmpty() && files_path_ != "0") {
+      emit TakeScreenshotSignal();
+    }
+}
 
-void ScreenCap::screenshot() { emit take_screenshot(); }
+void ScreenCap::RecordGifSlot() {
+    CheckMediaPath();
+    if (!files_path_.isEmpty() && files_path_ != "0") {
+      emit RecordGifSignal();
+    }
+}
 
-void ScreenCap::gif() { emit record_gif(); }
+void ScreenCap::CheckMediaPath() {
+    if (files_path_.isEmpty() || files_path_ == "0") {
+        ChooseDirectory();
+    }
+}
+
+
+void ScreenCap::SaveSettings() {
+    settings_->setValue("media_path", files_path_);
+}
+
+void ScreenCap::UploadSettings() {
+    files_path_ = settings_->value("media_path").toString();
+    SetPathToButtonName();
+}
+
+void ScreenCap::ConnectSignalSlot() {
+      connect(ui_->btn_folder_path, &QPushButton::clicked, this, &ScreenCap::ChooseDirectory);
+      connect(ui_->btn_open_folder, &QPushButton::clicked, this, &ScreenCap::OpenMediaFolder);
+      connect(ui_->btn_screenshot, &QPushButton::clicked, this, &ScreenCap::TakeScreenshotSlot);
+      connect(ui_->btn_record, &QPushButton::clicked, this, &ScreenCap::RecordGifSlot);
+}
+
+}

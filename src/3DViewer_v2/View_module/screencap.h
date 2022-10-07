@@ -5,13 +5,14 @@
 #include <QFileDialog>
 #include <QRegularExpression>
 #include <QWidget>
-
-#define JPEG 0
-#define BMP 1
+#include <QSettings>
+#include "enum_parameters.h"
 
 namespace Ui {
 class ScreenCap;
 }
+
+namespace S21 {
 
 class ScreenCap : public QWidget {
   Q_OBJECT
@@ -19,27 +20,32 @@ class ScreenCap : public QWidget {
  public:
   explicit ScreenCap(QWidget *parent = nullptr);
   ~ScreenCap();
-  QString files_path;
-  int file_type = JPEG;
-  QPixmap *screen;
-  QPushButton *path_btn;
-  void set_path_button();
+    QString get_media_path();
+    ScreenshotFile get_screenshot_type();
 
  signals:
-  void take_screenshot();
-  void record_gif();
+  void TakeScreenshotSignal();
+  void RecordGifSignal();
 
  private slots:
-  void choose_dir();
-  void open_folder();
-  void change_screen_type(int index);
-  void screenshot();
-  void gif();
+  void ChooseDirectory();
+  void OpenMediaFolder();
+  void TakeScreenshotSlot();
+  void RecordGifSlot();
 
  private:
-  Ui::ScreenCap *ui;
-  QRegularExpression name_pattern;
-  QRegularExpressionMatch match;
+  Ui::ScreenCap *ui_;
+  QRegularExpression name_pattern_;
+  QString files_path_;
+  QSettings *settings_;
+
+  void CheckMediaPath();
+  void SetPathToButtonName();
+  void SaveSettings();
+  void UploadSettings();
+  void ConnectSignalSlot();
 };
+
+}
 
 #endif  // SCREENCAP_H

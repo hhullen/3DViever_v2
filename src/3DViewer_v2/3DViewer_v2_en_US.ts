@@ -125,47 +125,72 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/screencap.ui" line="45"/>
+        <location filename="View_module/screencap.ui" line="50"/>
         <source>   Screen capture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/screencap.ui" line="76"/>
+        <location filename="View_module/screencap.ui" line="69"/>
+        <source>Take screenshot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="View_module/screencap.ui" line="84"/>
         <source>📸</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/screencap.ui" line="107"/>
+        <location filename="View_module/screencap.ui" line="103"/>
+        <source>Record GIF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="View_module/screencap.ui" line="118"/>
         <source>⬤</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/screencap.ui" line="140"/>
+        <location filename="View_module/screencap.ui" line="138"/>
+        <source>Open media folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="View_module/screencap.ui" line="154"/>
         <source>📁</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/screencap.ui" line="189"/>
+        <location filename="View_module/screencap.ui" line="203"/>
+        <source>Choose media path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="View_module/screencap.ui" line="218"/>
         <source>Path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/screencap.ui" line="245"/>
-        <source>Folder to save..</source>
+        <location filename="View_module/screencap.ui" line="274"/>
+        <source>Folder to save media..</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/screencap.ui" line="273"/>
+        <location filename="View_module/screencap.ui" line="294"/>
+        <source>Choose screenshot format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="View_module/screencap.ui" line="306"/>
         <source>JPEG</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/screencap.ui" line="278"/>
+        <location filename="View_module/screencap.ui" line="311"/>
         <source>BMP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/screencap.ui" line="335"/>
+        <location filename="View_module/screencap.ui" line="368"/>
         <source>Screenshot format</source>
         <translation type="unfinished"></translation>
     </message>

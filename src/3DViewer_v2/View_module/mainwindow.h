@@ -9,6 +9,7 @@
 
 #include "ptransform.h"
 #include "viewsetup.h"
+#include "screencap.h"
 #include "Controller_module/viewer_controller.h"
 #include "Model_module/model_frame.h"
 using S21::ModelFrame;
@@ -34,17 +35,17 @@ class MainWindow : public QMainWindow {
  signals:
 
  private slots:
+  void keyPressEvent(QKeyEvent *event);
+  void keyReleaseEvent(QKeyEvent *event);
   void SteerPanelClosedSlot(bool state);
   void ManageSteerPanelSlot(bool state);
   void CloseAppSlot(bool state);
   void OpenNewFileSlot();
-  void keyPressEvent(QKeyEvent *event);
-  void keyReleaseEvent(QKeyEvent *event);
   void ManageTransformPanelSlot(bool state);
   void ManageViewSetupPanelSlot(bool state);
   void ManageScreenCapturePanelSlot(bool state);
-  void GetScreenShot();
-  void GetGif();
+  void GetScreenShotSlot();
+  void GetGifSlot();
   void AddGifFrame();
   void UpdateTransformationSlot();
   void UpdateViewSlot();
@@ -54,21 +55,17 @@ class MainWindow : public QMainWindow {
   ViewerController *controller_;
   PTransform *transform_panel_;
   ViewSetup *view_panel_;
+  ScreenCap *screen_cap_;
 
   QString file_path_;
   QRegularExpression name_pattern_;
-  //  QSettings *settings_ ;
   //  QString folder_path_;
   //  QString file_name_;
   //  QDateTime *date_time_;
   //  QImage *frame_;
-  //  QTimer *time_;
-  //  bool recording_ = false;
-  //  int miliseconds_;
 
   void SetSteerPanelComponentsAvailability(bool state);
   void SetModelInfo();
-  //  void ResetViewSetup();
 
   void AddSteeringWidgetsToDockPanel();
   void ConnectSignalSlot();
