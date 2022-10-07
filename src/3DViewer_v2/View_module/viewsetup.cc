@@ -132,7 +132,7 @@ void ViewSetup::SaveSettings() {
 }
 
 void ViewSetup::UploadSettings() {
-    //  glview->projection_type = settings->value("projection_type").toInt();
+      ui_->cb_projection_style->setCurrentIndex(settings_->value("projection_type").toInt());
     //  glview->edge_style = settings->value("edge_style").toInt();
     //  glview->vertex_style = settings->value("vertex_style").toInt();
     //  QVariant bgCol = settings->value("background_color");
