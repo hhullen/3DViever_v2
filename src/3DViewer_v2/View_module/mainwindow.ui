@@ -76,13 +76,13 @@
   <widget class="QDockWidget" name="dock_widget">
    <property name="minimumSize">
     <size>
-     <width>210</width>
+     <width>198</width>
      <height>400</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
-     <width>210</width>
+     <width>198</width>
      <height>5000</height>
     </size>
    </property>
@@ -129,16 +129,35 @@
        <property name="widgetResizable">
         <bool>true</bool>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
        <widget class="QWidget" name="scroll_area_contents">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>193</width>
+          <width>181</width>
           <height>525</height>
          </rect>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_2"/>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+        </layout>
        </widget>
       </widget>
      </item>
@@ -168,6 +187,9 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Steer panel</string>
    </property>
@@ -177,6 +199,9 @@
   </action>
   <action name="action_transform">
    <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
     <bool>true</bool>
    </property>
    <property name="text">

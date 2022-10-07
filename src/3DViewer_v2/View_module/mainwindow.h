@@ -7,6 +7,8 @@
 #include <QScrollArea>
 #include <QSettings>
 
+#include "ptransform.h"
+#include "viewsetup.h"
 #include "Controller_module/viewer_controller.h"
 #include "Model_module/model_frame.h"
 using S21::ModelFrame;
@@ -44,12 +46,15 @@ class MainWindow : public QMainWindow {
   void GetScreenShot();
   void GetGif();
   void AddGifFrame();
+  void UpdateTransformation();
 
  private:
   Ui::MainWindow *ui_;
   ViewerController *controller_;
+  PTransform *transform_panel_;
+  ViewSetup *view_panel_;
+
   QString file_path_;
-  //  QString status_bar_info_;
   QRegularExpression name_pattern_;
   //  QSettings *settings_ ;
   //  QString folder_path_;

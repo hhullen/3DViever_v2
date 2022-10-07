@@ -5,58 +5,49 @@
 #include <QLabel>
 #include <QStyle>
 #include <QWidget>
-
-typedef enum {
-  PROJ_STYLE = 9,
-  EDGE_STYLE,
-  VERT_STYLE,
-  EDGE_COLOR,
-  VERT_COLOR,
-  BACK_COLOR,
-  EDGE_SIZE,
-  VERT_SIZE,
-  NO_VERTX = 2,
-  RESET_VIEW
-} mode_e;
+#include "enum_parameters.h"
 
 namespace Ui {
 class ViewSetup;
 }
 
+namespace S21 {
+
 class ViewSetup : public QWidget {
   Q_OBJECT
-
- signals:
-  void data_updated(double val, int type);
 
  public:
   explicit ViewSetup(QWidget *parent = nullptr);
   ~ViewSetup();
-  QColor edge_color;
-  QColor vertex_color;
-  QColor backg_color;
-  bool has_changed = false;
-  int edge_size;
-  int vertex_size;
-  int projection_type;
-  int edge_style;
-  int vertex_style;
-  void init_launch_setup();
+
+ signals:
+    void DataUpdatedSignal();
 
  private slots:
-  void projection_style_ch(int index);
-  void edge_style_ch(int index);
-  void vertex_style_ch(int index);
-  void set_edge_color();
-  void set_vertex_color();
-  void set_background_color();
-  void edge_size_ch(int pos);
-  void vertex_size_ch(int pos);
-  void reset_setup();
+    void GetProjectionStyleSlot(int index);
+    void GetEdgeStyleSlot(int index);
+    void GetVertexStyleSlot(int index);
+    void ChooseEdgeColorSlot();
+    void ChooseVertexColorSlot();
+    void ChooseBackgroundColorSlot();
+    void ResetSlot();
 
  private:
-  Ui::ViewSetup *ui;
-  void show_chosen_color_info(QPushButton *btn, QLabel *txt, QColor col);
+  Ui::ViewSetup *ui_;
+
+  QColor vertex_color_;
+  QColor backg_color_;
+  QColor edge_color_;
+  ProjectionType projection_type_;
+  VertexStyle vertex_style_;
+  EdgeStyle edge_style_;
+//  int vertex_size_;
+//  int edge_size_;
+
+  void ShowChosenColorInfo(QPushButton *btn, QLabel *txt, QColor col);
+  void ConnectSignalSlot();
 };
+
+}
 
 #endif  // VIEWSETUP_H

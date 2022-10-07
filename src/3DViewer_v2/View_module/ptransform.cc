@@ -75,7 +75,6 @@ void PTransform::ResetSlot() {
   ui_->d_spin_box_x_pos->setValue(0);
   ui_->d_spin_box_y_pos->setValue(0);
   ui_->d_spin_box_z_pos->setValue(0);
-  emit DataUpdatedSignal();
 }
 
 void PTransform::ConnectSignalSlot() {

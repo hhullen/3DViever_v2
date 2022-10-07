@@ -30,12 +30,13 @@ set(PROJECT_SOURCES
         View_module/ptransform.h
         View_module/ptransform.cc
         View_module/ptransform.ui
+        View_module/viewsetup.h
+        View_module/viewsetup.cc
+        View_module/viewsetup.ui
 #        View_module/screencap.h
 #        View_module/screencap.cc
 #        View_module/screencap.ui
-#        View_module/viewsetup.h
-#        View_module/viewsetup.cc
-#        View_module/viewsetup.ui
+        View_module/enum_parameters.h
 
         ${TS_FILES}
 )

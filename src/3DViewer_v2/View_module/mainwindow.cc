@@ -7,6 +7,11 @@ namespace S21 {
 MainWindow::MainWindow(ViewerController *controller, QWidget *parent)
     : controller_(controller), QMainWindow(parent), ui_(new Ui::MainWindow) {
   ui_->setupUi(this);
+  transform_panel_ = new PTransform();
+  view_panel_ = new ViewSetup();
+
+  view_panel_->setVisible(false);
+
   name_pattern_.setPattern("[^\\/]*$");
   //  date_time_ = new QDateTime();
 
@@ -94,7 +99,16 @@ void MainWindow::AddGifFrame() {
   //    gif->save(file_name);
   //    glview->show_message("Gif file saved to: " + screenCap->files_path,
   //    3000); recording = false;
-  //  }
+    //  }
+}
+
+void MainWindow::UpdateTransformation() {
+    double x, y, z;
+    transform_panel_->get_position(&x, &y, &z);
+    qDebug() << "pos" << x << " " << y << " " << z;
+    transform_panel_->get_angle(&x, &y, &z);
+    qDebug() << "ang" << x << " " << y << " " << z;
+    qDebug() << "scl" << transform_panel_->get_scale();
 }
 
 void MainWindow::GetMediaName(QString *name) {
@@ -115,11 +129,11 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event) {
 }
 
 void MainWindow::ManageTransformPanel(bool state) {
-  //  transformation->setVisible(state);
+    transform_panel_->setVisible(state);
 }
 
 void MainWindow::ManageViewSetupPanel(bool state) {
-  //  viewSetup->setVisible(state);
+    view_panel_->setVisible(state);
 }
 
 void MainWindow::ManageScreenCapturePanel(bool state) {
@@ -155,8 +169,8 @@ void MainWindow::OpenNewFile() {
 }
 
 void MainWindow::SetSteerPanelComponentsAvailability(bool state) {
-  //  transformation->setDisabled(!state);
-  //  viewSetup->setDisabled(!state);
+    transform_panel_->setDisabled(!state);
+    view_panel_->setDisabled(!state);
   //  screenCap->setDisabled(!state);
 }
 
@@ -188,8 +202,8 @@ void MainWindow::AddSteeringWidgetsToDockPanel() {
   ui_->scroll_area_contents->layout()->setAlignment(Qt::AlignTop |
                                                     Qt::AlignLeft);
   ui_->scroll_area_contents->layout()->setSpacing(0);
-  //  ui_->scrollAreaWidgetContents->layout()->addWidget(transformation);
-  //  ui_->scrollAreaWidgetContents->layout()->addWidget(viewSetup);
+    ui_->scroll_area_contents->layout()->addWidget(transform_panel_);
+    ui_->scroll_area_contents->layout()->addWidget(view_panel_);
   //  ui_->scrollAreaWidgetContents->layout()->addWidget(screenCap);
 }
 
@@ -210,8 +224,8 @@ void MainWindow::ConnectSignalSlot() {
           SLOT(OpenNewFile()));
   //  connect(this, SIGNAL(model_uploaded(model_t *)), glview,
   //          SLOT(draw_model(model_t *)));
-  //  connect(transformation, SIGNAL(data_updated(double, int)), this,
-  //          SLOT(update_model(double, int)));
+    connect(transform_panel_, SIGNAL(DataUpdatedSignal()), this,
+            SLOT(UpdateTransformation()));
   //  connect(viewSetup, SIGNAL(data_updated(double, int)), this,
   //          SLOT(update_view(double, int)));
   //  connect(this, SIGNAL(redraw()), glview, SLOT(update_frame()));

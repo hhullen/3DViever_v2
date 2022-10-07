@@ -2,117 +2,72 @@
 
 #include "ui_viewsetup.h"
 
-ViewSetup::ViewSetup(QWidget *parent) : QWidget(parent), ui(new Ui::ViewSetup) {
-  ui->setupUi(this);
+namespace S21 {
 
-  connect(ui->CBProjStyle, SIGNAL(currentIndexChanged(int)), this,
-          SLOT(projection_style_ch(int)));
-  connect(ui->CBEdgeStyle, SIGNAL(currentIndexChanged(int)), this,
-          SLOT(edge_style_ch(int)));
-  connect(ui->CBVertexStyle, SIGNAL(currentIndexChanged(int)), this,
-          SLOT(vertex_style_ch(int)));
-  connect(ui->PaletteEdge, SIGNAL(clicked()), this, SLOT(set_edge_color()));
-  connect(ui->PaletteVertex, SIGNAL(clicked()), this, SLOT(set_vertex_color()));
-  connect(ui->PaletteBackground, SIGNAL(clicked()), this,
-          SLOT(set_background_color()));
-  connect(ui->HSEdgeSize, SIGNAL(sliderMoved(int)), this,
-          SLOT(edge_size_ch(int)));
-  connect(ui->HSVertexSize, SIGNAL(sliderMoved(int)), this,
-          SLOT(vertex_size_ch(int)));
-  connect(ui->BtnResetView, SIGNAL(clicked()), this, SLOT(reset_setup()));
+ViewSetup::ViewSetup(QWidget *parent) : QWidget(parent), ui_(new Ui::ViewSetup) {
+  ui_->setupUi(this);
+  ConnectSignalSlot();
 }
 
-ViewSetup::~ViewSetup() { delete ui; }
+ViewSetup::~ViewSetup() { delete ui_; }
 
-void ViewSetup::init_launch_setup() {
-  show_chosen_color_info(ui->PaletteEdge, ui->labelEdgeRGB, edge_color);
-  show_chosen_color_info(ui->PaletteVertex, ui->labelVertexRGB, vertex_color);
-  show_chosen_color_info(ui->PaletteBackground, ui->labelBackgroundRGB,
-                         backg_color);
-  ui->HSVertexSize->setValue(vertex_size);
-  ui->HSEdgeSize->setValue(edge_size);
-  ui->CBProjStyle->setCurrentIndex(projection_type);
-  ui->CBVertexStyle->setCurrentIndex(vertex_style);
-  ui->CBEdgeStyle->setCurrentIndex(edge_style);
+void ViewSetup::GetProjectionStyleSlot(int index) {
+    if (index == 0) {
+        projection_type_ = ProjectionType::ORTHOGONAL;
+    } else if (index == 1) {
+        projection_type_ = ProjectionType::PERSPECTIVE;
+    }
+    emit DataUpdatedSignal();
 }
 
-void ViewSetup::projection_style_ch(int index) {
-  has_changed = true;
-  emit data_updated(index, PROJ_STYLE);
+void ViewSetup::GetEdgeStyleSlot(int index) {
+    if (index == 0) {
+        edge_style_ = EdgeStyle::SOLID;
+    } else if (index == 1) {
+        edge_style_ = EdgeStyle::STIPPLE;
+    }
+    emit DataUpdatedSignal();
 }
 
-void ViewSetup::edge_style_ch(int index) {
-  has_changed = true;
-  emit data_updated(index, EDGE_STYLE);
+void ViewSetup::GetVertexStyleSlot(int index) {
+    if (index == 0) {
+        vertex_style_ = VertexStyle::ROUND;
+    } else if (index == 1) {
+        vertex_style_ = VertexStyle::SQUARE;
+    } else if (index == 2) {
+        vertex_style_ = VertexStyle::NONE;
+    }
+    emit DataUpdatedSignal();
 }
 
-void ViewSetup::vertex_style_ch(int index) {
-  has_changed = true;
-  if (index == NO_VERTX) {
-    ui->HSVertexSize->setDisabled(true);
-  } else {
-    ui->HSVertexSize->setDisabled(false);
-  }
-  emit data_updated(index, VERT_STYLE);
+void ViewSetup::ChooseEdgeColorSlot() {
+    edge_color_ = GetNewColor();
+    QColor temp = QColorDialog::getColor(edge_color_, this, "Select edges color", QColorDialog::ColorDialogOption::ShowAlphaChannel);
+    if (temp.isValid()) {
+        edge_color_ = temp;
+        ui_->palette_edge->setStyleSheet(
+                    "QPushButton {"
+                        "border: 2px solid rgba(90, 90, 90, 0.6);"
+                        "border-radius: 10px;"
+                        "background-color:" + edge_color_.name(QColor::NameFormat::HexArgb) + ";"
+                        "color: rgba(0, 0, 0, 0);"
+                    "}");
+    }
 }
 
-void ViewSetup::set_edge_color() {
-  has_changed = true;
-  edge_color = QColorDialog::getColor(edge_color, this, "Select edges color");
-  show_chosen_color_info(ui->PaletteEdge, ui->labelEdgeRGB, edge_color);
-  emit data_updated(0, EDGE_COLOR);
+void ViewSetup::ChooseVertexColorSlot() {
+
 }
 
-void ViewSetup::set_vertex_color() {
-  has_changed = true;
-  vertex_color =
-      QColorDialog::getColor(vertex_color, this, "Select vertexes color");
-  show_chosen_color_info(ui->PaletteVertex, ui->labelVertexRGB, vertex_color);
-  emit data_updated(0, VERT_COLOR);
+void ViewSetup::ChooseBackgroundColorSlot() {
+
 }
 
-void ViewSetup::set_background_color() {
-  has_changed = true;
-  backg_color =
-      QColorDialog::getColor(backg_color, this, "Select background color");
-  show_chosen_color_info(ui->PaletteBackground, ui->labelBackgroundRGB,
-                         backg_color);
-  emit data_updated(0, BACK_COLOR);
+void ViewSetup::ResetSlot() {
+
 }
 
-void ViewSetup::edge_size_ch(int pos) {
-  has_changed = true;
-  edge_size = pos;
-  emit data_updated(0, EDGE_SIZE);
-}
-
-void ViewSetup::vertex_size_ch(int pos) {
-  has_changed = true;
-  vertex_size = pos;
-  emit data_updated(0, VERT_SIZE);
-}
-
-void ViewSetup::reset_setup() {
-  ui->CBProjStyle->setCurrentIndex(0);
-  ui->CBEdgeStyle->setCurrentIndex(0);
-  ui->CBVertexStyle->setCurrentIndex(0);
-  ui->HSVertexSize->setDisabled(false);
-  ui->HSVertexSize->setValue(2);
-  ui->HSEdgeSize->setValue(2);
-  edge_color = Qt::gray;
-  vertex_color = Qt::black;
-  backg_color = Qt::white;
-  edge_size = 2;
-  vertex_size = 2;
-  show_chosen_color_info(ui->PaletteEdge, ui->labelEdgeRGB, edge_color);
-  show_chosen_color_info(ui->PaletteVertex, ui->labelVertexRGB, vertex_color);
-  show_chosen_color_info(ui->PaletteBackground, ui->labelBackgroundRGB,
-                         backg_color);
-
-  emit data_updated(0, RESET_VIEW);
-}
-
-void ViewSetup::show_chosen_color_info(QPushButton *btn, QLabel *txt,
+void ViewSetup::ShowChosenColorInfo(QPushButton *btn, QLabel *txt,
                                        QColor col) {
   btn->setStyleSheet(
       "border: 2px solid grey;"
@@ -121,4 +76,24 @@ void ViewSetup::show_chosen_color_info(QPushButton *btn, QLabel *txt,
   txt->setText("R: " + QString::number(col.red()) +
                " G: " + QString::number(col.green()) +
                " B: " + QString::number(col.blue()));
+}
+
+void ViewSetup::ConnectSignalSlot() {
+      connect(ui_->cb_projection_style, &QComboBox::activated, this,
+              &ViewSetup::GetProjectionStyleSlot);
+      connect(ui_->cb_edge_style, &QComboBox::activated, this,
+              &ViewSetup::GetEdgeStyleSlot);
+      connect(ui_->cb_vertex_style, &QComboBox::activated, this,
+              &ViewSetup::GetVertexStyleSlot);
+      connect(ui_->palette_edge, &QPushButton::clicked, this, &ViewSetup::ChooseEdgeColorSlot);
+      connect(ui_->palette_vertex, &QPushButton::clicked, this, &ViewSetup::ChooseVertexColorSlot);
+      connect(ui_->palette_background, &QPushButton::clicked, this,
+              &ViewSetup::ChooseBackgroundColorSlot);
+      connect(ui_->hs_edge_size, &QSlider::sliderMoved, this,
+              &ViewSetup::DataUpdatedSignal);
+      connect(ui_->hs_vertex_size, &QSlider::sliderMoved, this,
+              &ViewSetup::DataUpdatedSignal);
+      connect(ui_->btn_reset, &QPushButton::clicked, this, &ViewSetup::ResetSlot);
+}
+
 }

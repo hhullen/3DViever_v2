@@ -25,7 +25,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="ViewSetupPanelName">
+  <widget class="QLabel" name="view_setup_panel_name">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -41,11 +41,16 @@
      <bold>true</bold>
     </font>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+	background-color: rgba(243, 249, 255, 10);
+}</string>
+   </property>
    <property name="text">
     <string>   View setup</string>
    </property>
   </widget>
-  <widget class="QLabel" name="labelProjectionType">
+  <widget class="QLabel" name="label_projection_type">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -101,7 +106,7 @@
     <string>Projection type</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="CBProjStyle">
+  <widget class="QComboBox" name="cb_projection_style">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -134,7 +139,7 @@
     </property>
    </item>
   </widget>
-  <widget class="QComboBox" name="CBEdgeStyle">
+  <widget class="QComboBox" name="cb_edge_style">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -167,7 +172,7 @@
     </property>
    </item>
   </widget>
-  <widget class="QLabel" name="labelEdgeStyle">
+  <widget class="QLabel" name="label_edge_style">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -223,7 +228,7 @@
     <string>Edges style</string>
    </property>
   </widget>
-  <widget class="QLabel" name="labelEdgeColor">
+  <widget class="QLabel" name="label_edge_color">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -279,7 +284,7 @@
     <string>Edges color</string>
    </property>
   </widget>
-  <widget class="Line" name="line_1">
+  <widget class="Line" name="separator_1">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -292,18 +297,18 @@
     <enum>Qt::Horizontal</enum>
    </property>
   </widget>
-  <widget class="QPushButton" name="PaletteEdge">
+  <widget class="QPushButton" name="palette_edge">
    <property name="geometry">
     <rect>
      <x>9</x>
      <y>210</y>
-     <width>30</width>
+     <width>20</width>
      <height>20</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
-     <width>30</width>
+     <width>2</width>
      <height>20</height>
     </size>
    </property>
@@ -315,18 +320,24 @@
    <property name="styleSheet">
     <string notr="true">QPushButton {
 	border: 2px solid rgba(90, 90, 90, 0.6);
+	border-radius: 10px;
 	background-color: rgba(100, 100, 100, 1.0);
+	color: rgba(0, 0, 0, 0);
 }
-</string>
+
+QPushButton:pressed {
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #404040 stop: 1 #686868);
+}</string>
    </property>
    <property name="text">
     <string>⬤</string>
    </property>
   </widget>
-  <widget class="QLabel" name="labelEdgeRGB">
+  <widget class="QLabel" name="label_edge_rgb">
    <property name="geometry">
     <rect>
-     <x>50</x>
+     <x>40</x>
      <y>210</y>
      <width>121</width>
      <height>21</height>
@@ -379,7 +390,7 @@
     <string>R: 100; G: 100; B: 100;</string>
    </property>
   </widget>
-  <widget class="QLabel" name="labelEdgeSize">
+  <widget class="QLabel" name="label_edge_size">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -435,7 +446,7 @@
     <string>Edges size</string>
    </property>
   </widget>
-  <widget class="QSlider" name="HSEdgeSize">
+  <widget class="QSlider" name="hs_edge_size">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -454,7 +465,7 @@
     <enum>Qt::Horizontal</enum>
    </property>
   </widget>
-  <widget class="Line" name="line_2">
+  <widget class="Line" name="separator_2">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -467,7 +478,7 @@
     <enum>Qt::Horizontal</enum>
    </property>
   </widget>
-  <widget class="QLabel" name="labelVertexStyle">
+  <widget class="QLabel" name="label_vertex_style">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -523,14 +534,20 @@
     <string>Vertexes style</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="PaletteVertex">
+  <widget class="QPushButton" name="palette_vertex">
    <property name="geometry">
     <rect>
      <x>9</x>
      <y>410</y>
-     <width>30</width>
+     <width>20</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>20</width>
+     <height>20</height>
+    </size>
    </property>
    <property name="font">
     <font>
@@ -540,16 +557,21 @@
    <property name="styleSheet">
     <string notr="true">QPushButton {
 	border: 2px solid rgba(90, 90, 90, 0.6);
+	border-radius: 10px;
 	background-color: rgba(100, 100, 100, 1.0);
 	color: rgba(0, 0, 0, 0);
 }
-</string>
+
+QPushButton:pressed {
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #404040 stop: 1 #686868);
+}</string>
    </property>
    <property name="text">
     <string>⬤</string>
    </property>
   </widget>
-  <widget class="QSlider" name="HSVertexSize">
+  <widget class="QSlider" name="hs_vertex_size">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -568,10 +590,10 @@
     <enum>Qt::Horizontal</enum>
    </property>
   </widget>
-  <widget class="QLabel" name="labelVertexRGB">
+  <widget class="QLabel" name="label_vertex_rgb">
    <property name="geometry">
     <rect>
-     <x>50</x>
+     <x>40</x>
      <y>410</y>
      <width>121</width>
      <height>21</height>
@@ -624,7 +646,7 @@
     <string>R: 100; G: 100; B: 100;</string>
    </property>
   </widget>
-  <widget class="QLabel" name="labelVertexSize">
+  <widget class="QLabel" name="label_vertex_size">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -680,7 +702,7 @@
     <string>Vertexes size</string>
    </property>
   </widget>
-  <widget class="QLabel" name="labelVertexColor">
+  <widget class="QLabel" name="label_vertex_color">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -736,7 +758,7 @@
     <string>Vertexes color</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="CBVertexStyle">
+  <widget class="QComboBox" name="cb_vertex_style">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -774,7 +796,7 @@
     </property>
    </item>
   </widget>
-  <widget class="Line" name="line_3">
+  <widget class="Line" name="separator_3">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -787,7 +809,7 @@
     <enum>Qt::Horizontal</enum>
    </property>
   </widget>
-  <widget class="QLabel" name="labelBackgroundCol">
+  <widget class="QLabel" name="label_background_color">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -843,14 +865,20 @@
     <string>Background color</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="PaletteBackground">
+  <widget class="QPushButton" name="palette_background">
    <property name="geometry">
     <rect>
      <x>9</x>
      <y>550</y>
-     <width>30</width>
+     <width>20</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>20</width>
+     <height>20</height>
+    </size>
    </property>
    <property name="font">
     <font>
@@ -860,19 +888,24 @@
    <property name="styleSheet">
     <string notr="true">QPushButton {
 	border: 2px solid rgba(90, 90, 90, 0.6);
+	border-radius: 10px;
 	background-color: rgba(100, 100, 100, 1.0);
 	color: rgba(0, 0, 0, 0);
 }
-</string>
+
+QPushButton:pressed {
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #404040 stop: 1 #686868);
+}</string>
    </property>
    <property name="text">
     <string>⬤</string>
    </property>
   </widget>
-  <widget class="QLabel" name="labelBackgroundRGB">
+  <widget class="QLabel" name="label_background_rgb">
    <property name="geometry">
     <rect>
-     <x>50</x>
+     <x>40</x>
      <y>550</y>
      <width>121</width>
      <height>21</height>
@@ -925,7 +958,7 @@
     <string>R: 100; G: 100; B: 100;</string>
    </property>
   </widget>
-  <widget class="Line" name="line_4">
+  <widget class="Line" name="separator_4">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -938,7 +971,7 @@
     <enum>Qt::Horizontal</enum>
    </property>
   </widget>
-  <widget class="QPushButton" name="BtnResetView">
+  <widget class="QPushButton" name="btn_reset">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -946,6 +979,12 @@
      <width>161</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>161</width>
+     <height>21</height>
+    </size>
    </property>
    <property name="font">
     <font>
@@ -968,7 +1007,7 @@ QPushButton:pressed {
     <string>Reset view</string>
    </property>
   </widget>
-  <widget class="Line" name="line_5">
+  <widget class="Line" name="separator_5">
    <property name="geometry">
     <rect>
      <x>10</x>

@@ -42,7 +42,9 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgba(243, 249, 255, 10);</string>
+    <string notr="true">QLabel {
+	background-color: rgba(243, 249, 255, 10);
+}</string>
    </property>
    <property name="text">
     <string>   Transform</string>
@@ -117,6 +119,9 @@
     <font>
      <pointsize>18</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
    </property>
    <property name="decimals">
     <number>6</number>
