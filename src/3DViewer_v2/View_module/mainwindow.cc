@@ -12,6 +12,8 @@ MainWindow::MainWindow(ViewerController *controller, QWidget *parent)
   transform_panel_ = new PTransform();
   view_panel_ = new ViewSetup();
   screen_cap_ = new ScreenCap();
+  UpdateViewSlot();
+  UpdateTransformationSlot();
 
   view_panel_->setVisible(false);
   screen_cap_->setVisible(false);
@@ -32,21 +34,20 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::GetScreenShotSlot() {
-    qDebug() << screen_cap_->get_screenshot_type();
-    qDebug() << "SCREEN" << screen_cap_->get_media_path();
-  //  if (!screenCap->files_path.isEmpty()) {
-  //    QImage img = glview->grabFramebuffer();
-  //    get_media_name(&file_name);
-  //    if (screenCap->file_type == JPEG) {
-  //      file_name.append(".jpeg");
-  //      img.save(file_name, "JPEG");
-  //    } else if (screenCap->file_type == BMP) {
-  //      file_name.append(".bmp");
-  //      img.save(file_name, "BMP");
-  //    }
-  //    glview->show_message("Screenshot sved to: " + screenCap->files_path,
-  //    3000);
-  //  }
+    if (!screen_cap_->get_media_path().isEmpty()) {
+        QString file_name;
+      QImage img = ogl_view_->grabFramebuffer();
+      GetMediaName(&file_name, screen_cap_->get_media_path());
+      if (screen_cap_->get_screenshot_type() == ScreenshotFile::JPEG) {
+        file_name.append(".jpeg");
+        img.save(file_name, "JPEG");
+      } else if (screen_cap_->get_screenshot_type() == ScreenshotFile::BMP) {
+        file_name.append(".bmp");
+        img.save(file_name, "BMP");
+      }
+      ogl_view_->ShowEventMessage("Screenshot sved to: " + screen_cap_->get_media_path(),
+                                  3000);
+    }
 }
 
 void MainWindow::GetGifSlot() {
@@ -87,38 +88,41 @@ void MainWindow::UpdateViewSlot() {
     ogl_view_->set_vertexes_size(view_panel_->get_vertex_size());
     ogl_view_->set_vertexes_style(view_panel_->get_vertex_style());
     ogl_view_->set_projection_type(view_panel_->get_projection_type());
+    ogl_view_->set_projection_state(true);
     ogl_view_->update();
+}
 
-    qDebug() << "bgc" << view_panel_->get_background_color();
-    qDebug() << "eco" << view_panel_->get_edges_color();
-    qDebug() << "esi" << view_panel_->get_edges_size();
-    qDebug() << "est" << view_panel_->get_edges_style();
-    qDebug() << "vco" << view_panel_->get_vertex_color();
-    qDebug() << "vsi" << view_panel_->get_vertex_size();
-    qDebug() << "vst" << view_panel_->get_vertex_style();
-    qDebug() << "prj" << view_panel_->get_projection_type();
+void MainWindow::UpdateTransformationPanelSlot() {
+    double x, y, z;
+
+    ogl_view_->get_position(&x, &y, &z);
+    transform_panel_->set_position(&x, &y, &z);
+
+    ogl_view_->get_angle(&x, &y, &z);
+    transform_panel_->set_angle(&x, &y, &z);
+
+    transform_panel_->set_scale(ogl_view_->get_scale());
 }
 
 void MainWindow::UpdateTransformationSlot() {
     double x, y, z;
+
     transform_panel_->get_position(&x, &y, &z);
     ogl_view_->set_position(x, y, z);
-    qDebug() << "pos" << x << " " << y << " " << z;
 
     transform_panel_->get_angle(&x, &y, &z);
     ogl_view_->set_angle(x, y, z);
-    qDebug() << "ang" << x << " " << y << " " << z;
 
     ogl_view_->set_scale(transform_panel_->get_scale());
-    qDebug() << "scl" << transform_panel_->get_scale();
     ogl_view_->update();
 }
 
-void MainWindow::GetMediaName(QString *name) {
-  //  name->clear();
-  //  name->append(screenCap->files_path);
-  //  name->append("/screen" +
-  //               date_time->currentDateTime().toString("yyyy_MM_dd_hh_mm_ss"));
+void MainWindow::GetMediaName(QString *name, QString path) {
+    QDateTime date_time;
+    name->clear();
+    name->append(path);
+    name->append("/screen" +
+                 date_time.currentDateTime().toString("yyyy_MM_dd_hh_mm_ss"));
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
@@ -159,7 +163,6 @@ void MainWindow::CloseAppSlot(bool state) { QApplication::quit(); }
 void MainWindow::OpenNewFileSlot() {
   file_path_ = QFileDialog::getOpenFileName(this, "Open .obj file", "/Users",
                                             "obj (*.obj);;");
-  qDebug() << file_path_;
   if (!file_path_.isEmpty()) {
     bool is_loaded = controller_->UploadNewModel(file_path_.toStdString());
     if (is_loaded) {
@@ -222,16 +225,14 @@ void MainWindow::ConnectSignalSlot() {
           &MainWindow::ManageScreenCapturePanelSlot);
   connect(ui_->action_open_new, &QAction::triggered, this,
           &MainWindow::OpenNewFileSlot);
-  //  connect(this, SIGNAL(model_uploaded(model_t *)), glview,
-  //          SLOT(draw_model(model_t *)));
     connect(transform_panel_, &PTransform::DataUpdatedSignal, this,
           &MainWindow::UpdateTransformationSlot);
     connect(view_panel_, &ViewSetup::DataUpdatedSignal, this,
             &MainWindow::UpdateViewSlot);
-  //  connect(this, SIGNAL(redraw()), glview, SLOT(update_frame()));
     connect(screen_cap_, &ScreenCap::TakeScreenshotSignal, this,
     &MainWindow::GetScreenShotSlot);
     connect(screen_cap_, &ScreenCap::RecordGifSignal, this, &MainWindow::GetGifSlot);
+    connect(ogl_view_, &OGLview::PositionUpdatedSignal, this, &MainWindow::UpdateTransformationPanelSlot);
 }
 
 }  // namespace S21

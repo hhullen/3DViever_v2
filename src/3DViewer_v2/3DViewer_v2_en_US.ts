@@ -54,13 +54,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/mainwindow.ui" line="216"/>
+        <location filename="View_module/mainwindow.ui" line="211"/>
+        <source>Ctrl+1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="View_module/mainwindow.ui" line="219"/>
         <source>View setup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="View_module/mainwindow.ui" line="224"/>
+        <location filename="View_module/mainwindow.ui" line="222"/>
+        <source>Ctrl+2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="View_module/mainwindow.ui" line="230"/>
         <source>Screen capture</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="View_module/mainwindow.ui" line="233"/>
+        <source>Ctrl+3</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

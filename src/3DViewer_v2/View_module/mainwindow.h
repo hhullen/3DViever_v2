@@ -6,6 +6,7 @@
 #include <QRegularExpression>
 #include <QScrollArea>
 #include <QSettings>
+#include <QThread>
 
 #include "ptransform.h"
 #include "viewsetup.h"
@@ -34,8 +35,6 @@ class MainWindow : public QMainWindow {
   void SaveSettings();
   void UploadSettings();
 
- signals:
-
  private slots:
   void keyPressEvent(QKeyEvent *event);
   void keyReleaseEvent(QKeyEvent *event);
@@ -51,6 +50,7 @@ class MainWindow : public QMainWindow {
   void AddGifFrame();
   void UpdateTransformationSlot();
   void UpdateViewSlot();
+  void UpdateTransformationPanelSlot();
 
  private:
   Ui::MainWindow *ui_;
@@ -72,7 +72,7 @@ class MainWindow : public QMainWindow {
 
   void AddSteeringWidgetsToDockPanel();
   void ConnectSignalSlot();
-  void GetMediaName(QString *name);
+  void GetMediaName(QString *name, QString path);
 };
 
 }  // namespace S21

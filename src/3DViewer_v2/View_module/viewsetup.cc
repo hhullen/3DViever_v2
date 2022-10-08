@@ -82,7 +82,7 @@ void ViewSetup::ResetSlot() {
     SetColor(QColor(255, 255, 255, 255), &background_color_, ui_->palette_background);
     SetColor(QColor(255, 23, 190, 255), &edge_color_, ui_->palette_edge);
     ui_->hs_edge_size->setValue(2);
-    ui_->hs_vertex_size->setValue(3);
+    ui_->hs_vertex_size->setValue(5);
     ui_->cb_projection_style->setCurrentIndex(ProjectionType::ORTHOGONAL);
     ui_->cb_vertex_style->setCurrentIndex(VertexStyle::ROUND);
     ui_->cb_edge_style->setCurrentIndex(EdgeStyle::SOLID);

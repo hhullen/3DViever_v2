@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 
+#include <iostream>
 #include <string>
 
 #include "../Model_module/model_frame.h"
@@ -25,6 +26,14 @@ TEST(loader_test, uploading_cube) {
   EXPECT_TRUE(abs(m.get_min_value(S21::Axis::X) - (-1)) <= kACCURACUY);
   EXPECT_TRUE(abs(m.get_min_value(S21::Axis::Y) - (-1)) <= kACCURACUY);
   EXPECT_TRUE(abs(m.get_min_value(S21::Axis::Z) - (-1)) <= kACCURACUY);
+
+  const vector<double> *vert = m.get_vertexes_vector();
+  const vector<unsigned int> *indi = m.get_indices_vector();
+  const double *data = vert->data();
+
+  for (int i = 0; i < vert->capacity(); i += 3) {
+    std::cout << data[i] << ", " << data[i + 1] << ", " << data[i + 2] << ",\n";
+  }
 }
 
 TEST(loader_test, uploading_million) {

@@ -13,7 +13,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
-find_package(Qt6 REQUIRED COMPONENTS OpenGL)
+#find_package(Qt6 REQUIRED COMPONENTS OpenGL)
 find_package(Qt6 REQUIRED COMPONENTS OpenGLWidgets)
 
 set(TS_FILES 3DViewer_v2_en_US.ts)
@@ -82,7 +82,7 @@ else()
 endif()
 
 target_link_libraries(3DViewer_v2 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-target_link_libraries(3DViewer_v2 PRIVATE Qt6::OpenGL)
+#target_link_libraries(3DViewer_v2 PRIVATE Qt6::OpenGL)
 target_link_libraries(3DViewer_v2 PRIVATE Qt6::OpenGLWidgets)
 
 set_target_properties(3DViewer_v2 PROPERTIES
