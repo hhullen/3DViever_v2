@@ -52,7 +52,8 @@ void MainWindow::GetScreenShotSlot() {
 
 void MainWindow::GetGifSlot() {
     qDebug() << "GIF" << screen_cap_->get_media_path();
-  //  if (!screenCap->files_path.isEmpty() && !recording) {
+    ScreenRecorder recorder;
+    if (!screen_cap_->get_media_path().isEmpty() && !thread_.isRunning()) {
   //    recording = true;
   //    miliseconds = 0;
   //    gif = new QGifImage;
@@ -63,7 +64,7 @@ void MainWindow::GetGifSlot() {
   //    connect(time, SIGNAL(timeout()), this, SLOT(add_gif_frame()));
   //    time->start(100);
   //    glview->show_message("Recording in progress...", 1000);
-  //  }
+    }
 }
 
 void MainWindow::AddGifFrame() {
