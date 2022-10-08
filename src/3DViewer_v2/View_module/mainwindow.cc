@@ -7,6 +7,7 @@ namespace S21 {
 MainWindow::MainWindow(ViewerController *controller, QWidget *parent)
     : controller_(controller), QMainWindow(parent), ui_(new Ui::MainWindow) {
   ui_->setupUi(this);
+  ogl_view_ = new OGLview();
   transform_panel_ = new PTransform();
   view_panel_ = new ViewSetup();
   screen_cap_ = new ScreenCap();
@@ -104,13 +105,15 @@ void MainWindow::GetMediaName(QString *name) {
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
-  //  if (event->key() == Qt::Key_Space) {
-  //    glview->key_space = true;
-  //  }
+    if (event->key() == Qt::Key_Space) {
+        ogl_view_->set_key_spcace_state(true);
+    }
 }
 
 void MainWindow::keyReleaseEvent(QKeyEvent *event) {
-  //  if (event->key() == Qt::Key_Space) glview->key_space = false;
+    if (event->key() == Qt::Key_Space)  {
+       ogl_view_->set_key_spcace_state(false);
+    }
 }
 
 void MainWindow::ManageTransformPanelSlot(bool state) {
@@ -145,6 +148,7 @@ void MainWindow::OpenNewFileSlot() {
     if (is_loaded) {
       SetModelInfo();
       SetSteerPanelComponentsAvailability(true);
+
       //      emit model_uploaded(model);
     } else {
       //      glview->show_message("Can not upload file", 3000);

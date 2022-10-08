@@ -12,6 +12,7 @@
 #include "screencap.h"
 #include "Controller_module/viewer_controller.h"
 #include "Model_module/model_frame.h"
+#include "View_module/oglview.h"
 using S21::ModelFrame;
 using S21::ViewerController;
 
@@ -53,6 +54,7 @@ class MainWindow : public QMainWindow {
  private:
   Ui::MainWindow *ui_;
   ViewerController *controller_;
+  OGLview *ogl_view_;
   PTransform *transform_panel_;
   ViewSetup *view_panel_;
   ScreenCap *screen_cap_;

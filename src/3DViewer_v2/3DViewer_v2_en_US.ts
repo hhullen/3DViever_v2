@@ -65,6 +65,14 @@
     </message>
 </context>
 <context>
+    <name>OGLview</name>
+    <message>
+        <location filename="View_module/oglview.ui" line="20"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PTransform</name>
     <message>
         <location filename="View_module/ptransform.ui" line="26"/>
