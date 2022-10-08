@@ -14,6 +14,7 @@
 #include "Controller_module/viewer_controller.h"
 #include "Model_module/model_frame.h"
 #include "View_module/oglview.h"
+#include "screenrecorder.h"
 //#include "../gifimage/qgifimage.h"
 using S21::ModelFrame;
 using S21::ViewerController;
@@ -62,6 +63,7 @@ class MainWindow : public QMainWindow {
 
   QString file_path_;
   QRegularExpression name_pattern_;
+  QThread thread_;
   //  QString folder_path_;
   //  QString file_name_;
   //  QDateTime *date_time_;
