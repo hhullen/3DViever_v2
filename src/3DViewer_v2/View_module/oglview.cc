@@ -8,10 +8,12 @@ OGLview::OGLview(QWidget *parent) : QOpenGLWidget(parent), ui_(new Ui::OGLview) 
   ui_->setupUi(this);
   new_cursor_.setShape(Qt::OpenHandCursor);
   setCursor(new_cursor_);
+  vertexes_ = nullptr;
+  indices_ = nullptr;
 
   background_color_ = Qt::white;
   timer = new QTimer(this);
-  connect(timer, SIGNAL(timeout()), this, SLOT(clear_message()));
+  connect(timer, SIGNAL(timeout()), this, SLOT(ClearMessageSlot()));
 }
 
 OGLview::~OGLview() { delete ui_; }
@@ -20,9 +22,69 @@ void OGLview::set_key_spcace_state(bool state) {
     key_space_ = state;
 }
 
+void OGLview::set_edges_color(QColor color) {
+    edges_color_ = color;
+}
+
+void OGLview::set_vertexes_color(QColor color) {
+    vertexes_color_ = color;
+}
+
+void OGLview::set_background_color(QColor color) {
+    background_color_ = color;
+}
+
+void OGLview::set_projection_type(ProjectionType type) {
+    projection_type_ = type;
+}
+
+void OGLview::set_edges_style(EdgeStyle style) {
+    edges_style_ = style;
+}
+
+void OGLview::set_vertexes_style(VertexStyle style) {
+    vertexes_style_ = style;
+}
+
+void OGLview::set_edges_size(int size){
+    edges_size_ = size;
+}
+
+void OGLview::set_vertexes_size(int size) {
+    vertexes_size_ = size;
+}
+
+void OGLview::set_position(double x, double y, double z) {
+    position_x_ = x;
+    position_y_ = y;
+    position_z_ = z;
+}
+
+void OGLview::set_angle(double x, double y, double z) {
+    angle_x_ = x;
+    angle_y_ = y;
+    angle_z_ = z;
+}
+
+void OGLview::set_scale(double scale) {
+    scale_ = scale;
+}
+
+void OGLview::set_model_vertexes_vector(const std::vector<double> *vector) {
+    vertexes_ = vector;
+}
+
+void OGLview::set_model_indices_vector(const std::vector<unsigned int> *vector) {
+    indices_ = vector;
+}
+
+void OGLview::set_model_facets_amount(unsigned int facets) {
+    facets_n_ = facets;
+}
+
 void OGLview::DrawModel() {
-    if (vertexes && indices) {
-        GetVertexesBuffer();
+    if (vertexes_ && indices_) {
+        new_model_loaded_ = true;
         update();
     }
 }
@@ -45,13 +107,19 @@ void OGLview::resizeGL(int w, int h) {
 void OGLview::paintGL() {
   glClearColor(background_color_.redF(), background_color_.greenF(),
                background_color_.blueF(), 1.0f);
-  if (vertexes && indices) {
+  if (vertexes_ && indices_) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (projection_type_changed_) {
         SetProjectionType();
     }
     SetModelPosition();
-//    get_vertexes_buffer();
+    if (new_model_loaded_) {
+        GetVertexesBuffer();
+    }
+    qDebug() << vertexes_->size();
+    qDebug() << vertexes_->capacity();
+    qDebug() << indices_->size();
+    qDebug() << indices_->capacity();
     glEnableClientState(GL_VERTEX_ARRAY);
     DrawPoints();
     DrawLines();
@@ -60,17 +128,19 @@ void OGLview::paintGL() {
 }
 
 void OGLview::GetVertexesBuffer() {
-  glVertexPointer(3, GL_DOUBLE, 0, vertexes->data());
+  glVertexPointer(3, GL_DOUBLE, 0, vertexes_->data());
+  new_model_loaded_ = false;
 }
 
 void OGLview::SetModelPosition() {
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
   glTranslated(0, 0, -start_z_position_);
-  glTranslated(posX, posY, posZ - 5);
-  glRotatef(angleX, -1, 0, 0);
-  glRotatef(angleY, 0, 1, 0);
-  glScalef(scale, scale, scale);
+  glTranslated(position_x_, position_y_, position_z_ - 5);
+  glRotatef(angle_x_, -1, 0, 0);
+  glRotatef(angle_y_, 0, 1, 0);
+  glRotatef(angle_z_, 0, 0, 1);
+  glScalef(scale_, scale_, scale_);
 }
 
 void OGLview::DrawPoints() {
@@ -83,7 +153,7 @@ void OGLview::DrawPoints() {
   glColor3d(vertexes_color_.redF(), vertexes_color_.greenF(),
             vertexes_color_.blueF());
   if (vertexes_style_ != VertexStyle::NONE) {
-      glDrawArrays(GL_POINTS, 0, vertexes->size());
+      glDrawArrays(GL_POINTS, 0, vertexes_->size());
   }
 }
 
@@ -96,8 +166,8 @@ void OGLview::DrawLines() {
   }
   glLineWidth(edges_size_);
   glColor3d(edges_color_.redF(), edges_color_.greenF(), edges_color_.blueF());
-  glDrawElements(GL_LINES, indices->size(), GL_UNSIGNED_INT,
-                 indices->data());
+  glDrawElements(GL_LINES, indices_->size(), GL_UNSIGNED_INT,
+                 indices_->data());
 }
 
 void OGLview::SetProjectionType() {
@@ -138,53 +208,53 @@ void OGLview::mouseReleaseEvent(QMouseEvent *event) {
 void OGLview::mouseMoveEvent(QMouseEvent *event) {
   mouse_now_ = event->pos() - mouse_now_;
   if ((mouse_now_.x() != 0 || mouse_now_.y() != 0) && left_mouse_button_)
-    move_model_by_mouse(mouse_now_);
+    MoveModelByMouse(mouse_now_);
   mouse_now_ = event->pos();
 }
 
 void OGLview::wheelEvent(QWheelEvent *event) {
   if (event->pixelDelta().y() != 0 && key_space_)
-    move_model_by_wheel(event->pixelDelta().y());
+    MoveModelByWheel(event->pixelDelta().y());
   else if (event->pixelDelta().y() != 0 && !key_space_)
-    scale_model_by_wheel(event->pixelDelta().y());
+    ScaleModelByWheel(event->pixelDelta().y());
 }
 
-void OGLview::move_model_by_wheel(int dz) {
+void OGLview::MoveModelByWheel(int dz) {
   if (dz > 0) {
-    posZ += 1;
+    position_z_ += 1;
   } else if (dz < 0) {
-    posZ -= 1;
+    position_z_ -= 1;
   }
   update();
 }
 
-void OGLview::scale_model_by_wheel(int ds) {
+void OGLview::ScaleModelByWheel(int ds) {
   if (ds < 0) {
-    scale *= 0.9;
+    scale_ *= 0.9;
   } else if (ds > 0) {
-    scale *= 1.1111111;
+    scale_ *= 1.1111111;
   }
   update();
 }
 
-void OGLview::move_model_by_mouse(QPoint pos) {
+void OGLview::MoveModelByMouse(QPoint pos) {
   if (key_space_) {
     dxMove = axis_scale_ * 2 * pos.x() / window_W;
     dyMove = axis_scale_ * 2 * -pos.y() / window_H;
 
-    posX += dxMove;
-    posY += dyMove;
+    position_x_ += dxMove;
+    position_y_ += dyMove;
   } else {
     dxRotate = axis_scale_ * 100 * pos.x() / window_W;
     dyRotate = axis_scale_ * 100 * -pos.y() / window_H;
 
-    increase_angle(&angleX, dyRotate);
-    increase_angle(&angleY, dxRotate);
+    IncreaseAngle(&angle_x_, dyRotate);
+    IncreaseAngle(&angle_y_, dxRotate);
   }
   update();
 }
 
-void OGLview::increase_angle(double *angle, double dr) {
+void OGLview::IncreaseAngle(double *angle, double dr) {
   *angle += dr;
   if (*angle >= 360) {
     *angle -= 360;

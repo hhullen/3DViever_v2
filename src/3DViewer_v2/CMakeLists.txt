@@ -40,16 +40,16 @@ set(PROJECT_SOURCES
         View_module/oglview.h
         View_module/oglview.cc
         View_module/oglview.ui
-        giflib/dgif_lib.c
-        giflib/egif_lib.c
-        giflib/gif_err.c
-        giflib/gif_hash.c
-        giflib/gifalloc.c
-        giflib/quantize.c
-        gifimage/qgifglobal.h
-        gifimage/qgifimage.h
-        gifimage/qgifimage_p.h
-        gifimage/qgifimage.cpp
+#        giflib/dgif_lib.c
+#        giflib/egif_lib.c
+#        giflib/gif_err.c
+#        giflib/gif_hash.c
+#        giflib/gifalloc.c
+#        giflib/quantize.c
+#        gifimage/qgifglobal.h
+#        gifimage/qgifimage.h
+#        gifimage/qgifimage_p.h
+#        gifimage/qgifimage.cpp
 
         ${TS_FILES}
 )

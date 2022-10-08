@@ -28,4 +28,12 @@ double ViewerController::get_min_value(Axis axis) {
   return get_min_value(axis);
 }
 
+const vector<double> *ViewerController::get_vertexes_vector() {
+  return model_->get_vertexes_vector();
+}
+
+const vector<unsigned int> *ViewerController::get_indices_vector() {
+  return model_->get_indices_vector();
+}
+
 }  // namespace S21

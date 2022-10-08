@@ -8,6 +8,7 @@ MainWindow::MainWindow(ViewerController *controller, QWidget *parent)
     : controller_(controller), QMainWindow(parent), ui_(new Ui::MainWindow) {
   ui_->setupUi(this);
   ogl_view_ = new OGLview();
+  ui_->central_widget->layout()->addWidget(ogl_view_);
   transform_panel_ = new PTransform();
   view_panel_ = new ViewSetup();
   screen_cap_ = new ScreenCap();
@@ -78,6 +79,16 @@ void MainWindow::AddGifFrame() {
 }
 
 void MainWindow::UpdateViewSlot() {
+    ogl_view_->set_background_color(view_panel_->get_background_color());
+    ogl_view_->set_edges_color(view_panel_->get_edges_color());
+    ogl_view_->set_edges_size(view_panel_->get_edges_size());
+    ogl_view_->set_edges_style(view_panel_->get_edges_style());
+    ogl_view_->set_vertexes_color(view_panel_->get_vertex_color());
+    ogl_view_->set_vertexes_size(view_panel_->get_vertex_size());
+    ogl_view_->set_vertexes_style(view_panel_->get_vertex_style());
+    ogl_view_->set_projection_type(view_panel_->get_projection_type());
+    ogl_view_->update();
+
     qDebug() << "bgc" << view_panel_->get_background_color();
     qDebug() << "eco" << view_panel_->get_edges_color();
     qDebug() << "esi" << view_panel_->get_edges_size();
@@ -91,10 +102,16 @@ void MainWindow::UpdateViewSlot() {
 void MainWindow::UpdateTransformationSlot() {
     double x, y, z;
     transform_panel_->get_position(&x, &y, &z);
+    ogl_view_->set_position(x, y, z);
     qDebug() << "pos" << x << " " << y << " " << z;
+
     transform_panel_->get_angle(&x, &y, &z);
+    ogl_view_->set_angle(x, y, z);
     qDebug() << "ang" << x << " " << y << " " << z;
+
+    ogl_view_->set_scale(transform_panel_->get_scale());
     qDebug() << "scl" << transform_panel_->get_scale();
+    ogl_view_->update();
 }
 
 void MainWindow::GetMediaName(QString *name) {
@@ -147,11 +164,16 @@ void MainWindow::OpenNewFileSlot() {
     bool is_loaded = controller_->UploadNewModel(file_path_.toStdString());
     if (is_loaded) {
       SetModelInfo();
+      UpdateViewSlot();
+      UpdateTransformationSlot();
       SetSteerPanelComponentsAvailability(true);
-
-      //      emit model_uploaded(model);
+        ogl_view_->set_model_vertexes_vector(controller_->get_vertexes_vector());
+        ogl_view_->set_model_indices_vector(controller_->get_indices_vector());
+        ogl_view_->set_model_facets_amount(controller_->get_facets_amount());
+        ogl_view_->ShowEventMessage("Successfully loaded", 2000);
+        ogl_view_->DrawModel();
     } else {
-      //      glview->show_message("Can not upload file", 3000);
+        ogl_view_->ShowEventMessage("Can not upload file", 3000);
       SetSteerPanelComponentsAvailability(false);
     }
   }

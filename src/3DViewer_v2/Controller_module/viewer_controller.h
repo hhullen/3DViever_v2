@@ -15,6 +15,8 @@ class ViewerController {
   unsigned int get_indices_amount();
   double get_max_value(Axis axis);
   double get_min_value(Axis axis);
+  const vector<double> *get_vertexes_vector();
+  const vector<unsigned int> *get_indices_vector();
 
  private:
   ModelFrame *model_;

@@ -56,6 +56,8 @@ bool ModelFrame::UploadModel(string file_path) {
 
   if (IsCorrectModel()) {
     returnable = true;
+    vertexes_.vertexes.shrink_to_fit();
+    facets_.indices.shrink_to_fit();
   } else {
     RemoveModel();
   }
