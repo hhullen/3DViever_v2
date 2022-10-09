@@ -24,20 +24,11 @@ void OGLview::set_projection_state(bool state) {
   projection_type_changed_ = state;
 }
 
-void OGLview::set_edges_color(QColor color) {
-  edges_color_ = color;
-  update();
-}
+void OGLview::set_edges_color(QColor color) { edges_color_ = color; }
 
-void OGLview::set_vertexes_color(QColor color) {
-  vertexes_color_ = color;
-  update();
-}
+void OGLview::set_vertexes_color(QColor color) { vertexes_color_ = color; }
 
-void OGLview::set_background_color(QColor color) {
-  background_color_ = color;
-  update();
-}
+void OGLview::set_background_color(QColor color) { background_color_ = color; }
 
 void OGLview::set_projection_type(ProjectionType type) {
   projection_type_ = type;

@@ -45,7 +45,7 @@ get_html:
 	makeinfo --html -o $(DOC_DIR) dvi/info.texi
 
 dist:	
-	bash archiver.sh $(BUILD_DIR)/$(MAIN_PROJ_NAME).tar
+	tar -cvf $(BUILD_DIR)/$(MAIN_PROJ_NAME).tar $(MAIN_PROJ_NAME)
 
 check:
 	cppcheck $(CPPCH_SETUP) $(CHECK_FILES)

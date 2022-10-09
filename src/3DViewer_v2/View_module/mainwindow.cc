@@ -12,6 +12,7 @@ MainWindow::MainWindow(ViewerController *controller, QWidget *parent)
   transform_panel_ = new PTransform();
   view_panel_ = new ViewSetup();
   screen_cap_ = new ScreenCap();
+  recording_ = false;
 
   view_panel_->setVisible(false);
   screen_cap_->setVisible(false);
