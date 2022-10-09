@@ -15,7 +15,6 @@
 #include "Controller_module/viewer_controller.h"
 #include "Model_module/model_frame.h"
 #include "View_module/oglview.h"
-#include "screenrecorder.h"
 using S21::ModelFrame;
 using S21::ViewerController;
 
@@ -63,8 +62,12 @@ class MainWindow : public QMainWindow {
 
   QString file_path_;
   QRegularExpression name_pattern_;
-  QThread *thread_;
-  ScreenRecorder *recorder_;
+  QString file_name_;
+  QTimer *time_;
+  QImage *frame_;
+  QGifImage *gif_;
+  unsigned int miliseconds_;
+  bool recording_;
 
   void SetSteerPanelComponentsAvailability(bool state);
   void SetModelInfo();

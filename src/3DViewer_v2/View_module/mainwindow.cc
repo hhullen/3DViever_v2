@@ -7,8 +7,6 @@ namespace S21 {
 MainWindow::MainWindow(ViewerController *controller, QWidget *parent)
     : controller_(controller), QMainWindow(parent), ui_(new Ui::MainWindow) {
   ui_->setupUi(this);
-  thread_ = new QThread();
-  recorder_ = new ScreenRecorder();
   ogl_view_ = new OGLview();
   ui_->central_widget->layout()->addWidget(ogl_view_);
   transform_panel_ = new PTransform();
@@ -33,8 +31,6 @@ MainWindow::MainWindow(ViewerController *controller, QWidget *parent)
 
 MainWindow::~MainWindow() {
   delete ui_;
-    delete thread_;
-    delete recorder_;
 }
 
 void MainWindow::GetScreenShotSlot() {
@@ -55,57 +51,36 @@ void MainWindow::GetScreenShotSlot() {
 }
 
 void MainWindow::GetGifSlot() {
-    qDebug() << "GIF" << screen_cap_->get_media_path();
-
-//    if (!screen_cap_->get_media_path().isEmpty() && !recording) {
-//      recording = true;
-//      miliseconds = 0;
-//      gif = new QGifImage;
-//      frame = new QImage();
-//      time = new QTimer();
-//      GetMediaName(&file_name, screen_cap_->get_media_path());
-//      file_name.append(".gif");
-//      connect(time, SIGNAL(timeout()), this, SLOT(add_gif_frame()));
-//      time->start(100);
-//      ogl_view_->ShowEventMessage("Recording in progress...", 1000);
-//    }
-
-    if (!screen_cap_->get_media_path().isEmpty() && !thread_->isRunning()) {
-        QString file_name;
-        GetMediaName(&file_name, screen_cap_->get_media_path());
-        file_name.append(".gif");
-        recorder_->set_file_name(file_name);
-        recorder_->set_screen_to_record(ogl_view_);
-        recorder_->moveToThread(thread_);
-        connect(thread_, &QThread::started, recorder_, &ScreenRecorder::Record);
-        connect(recorder_, &ScreenRecorder::FinishedSignal, thread_, &QThread::terminate);
-        thread_->start();
+    if (!screen_cap_->get_media_path().isEmpty() && !recording_) {
+        file_name_ = screen_cap_->get_media_path();
+      recording_ = true;
+      miliseconds_ = 0;
+      gif_ = new QGifImage;
+      frame_ = new QImage();
+      time_ = new QTimer();
+      GetMediaName(&file_name_, screen_cap_->get_media_path());
+      file_name_.append(".gif");
+      connect(time_, &QTimer::timeout, this, &MainWindow::AddGifFrame);
+      time_->start(100);
+      ogl_view_->ShowEventMessage("Recording in progress...", 1000);
     }
 }
 
 void MainWindow::AddGifFrame() {
 
-//    *frame = ogl_view_->grabFramebuffer();
-//      *frame = frame->scaled(640, 480);
-//      gif->addFrame(*frame, 100);
-//      miliseconds += 100;
-//      if (miliseconds >= 5000) {
-//        time->stop();
-//        gif->save(file_name);
-//        ogl_view_->ShowEventMessage("Gif file saved", 3000);
-//        recording = false;
-//      }
-
-  //  *frame = glview->grabFramebuffer();
-  //  *frame = frame->scaled(640, 480);
-  //  gif->addFrame(*frame, 100);
-  //  miliseconds += 100;
-  //  if (miliseconds >= 5000) {
-  //    time->stop();
-  //    gif->save(file_name);
-  //    glview->show_message("Gif file saved to: " + screenCap->files_path,
-  //    3000); recording = false;
-    //  }
+    *frame_ = ogl_view_->grabFramebuffer();
+      *frame_ = frame_->scaled(640, 480);
+      gif_->addFrame(*frame_, 100);
+      miliseconds_ += 100;
+      if (miliseconds_ >= 5000) {
+        time_->stop();
+        gif_->save(file_name_);
+        ogl_view_->ShowEventMessage("Gif file saved", 3000);
+        recording_ = false;
+        delete time_;
+        delete frame_;
+        delete gif_;
+      }
 }
 
 void MainWindow::UpdateViewSlot() {
@@ -262,8 +237,6 @@ void MainWindow::ConnectSignalSlot() {
     &MainWindow::GetScreenShotSlot);
     connect(screen_cap_, &ScreenCap::RecordGifSignal, this, &MainWindow::GetGifSlot);
     connect(ogl_view_, &OGLview::PositionUpdatedSignal, this, &MainWindow::UpdateTransformationPanelSlot);
-//    connect(thread_, &QThread::started, recorder_, &ScreenRecorder::Record);
-//    connect(recorder_, &ScreenRecorder::FinishedSignal, this, &MainWindow::TerminateRecord);
 }
 
 }  // namespace S21

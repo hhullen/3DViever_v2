@@ -42,8 +42,6 @@ set(PROJECT_SOURCES
         View_module/oglview.h
         View_module/oglview.cc
         View_module/oglview.ui
-        View_module/screenrecorder.h
-        View_module/screenrecorder.cc
         giflib/dgif_lib.c
         giflib/egif_lib.c
         giflib/gif_err.c
