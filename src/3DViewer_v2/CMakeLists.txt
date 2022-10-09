@@ -13,7 +13,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
-#find_package(Qt6 REQUIRED COMPONENTS OpenGL)
 find_package(Qt6 REQUIRED COMPONENTS OpenGLWidgets)
 
 set(TS_FILES 3DViewer_v2_en_US.ts)
@@ -42,16 +41,22 @@ set(PROJECT_SOURCES
         View_module/oglview.ui
         View_module/screenrecorder.h
         View_module/screenrecorder.cc
-#        giflib/dgif_lib.c
-#        giflib/egif_lib.c
-#        giflib/gif_err.c
-#        giflib/gif_hash.c
-#        giflib/gifalloc.c
-#        giflib/quantize.c
-#        gifimage/qgifglobal.h
-#        gifimage/qgifimage.h
-#        gifimage/qgifimage_p.h
-#        gifimage/qgifimage.cpp
+        View_module/giflib/dgif_lib.c
+        View_module/giflib/egif_lib.c
+        View_module/giflib/gif_err.c
+        View_module/giflib/gif_font.c
+        View_module/giflib/gif_hash.c
+        View_module/giflib/gif_hash.h
+        View_module/giflib/gif_lib.h
+        View_module/giflib/gif_lib_private.h
+        View_module/giflib/gifalloc.c
+        View_module/giflib/quantize.c
+        View_module/giflib/gifalloc.c
+        View_module/giflib/quantize.c
+        View_module/gifimage/qgifglobal.h
+        View_module/gifimage/qgifimage.h
+        View_module/gifimage/qgifimage_p.h
+        View_module/gifimage/qgifimage.cpp
 
         ${TS_FILES}
 )
@@ -84,7 +89,6 @@ else()
 endif()
 
 target_link_libraries(3DViewer_v2 PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-#target_link_libraries(3DViewer_v2 PRIVATE Qt6::OpenGL)
 target_link_libraries(3DViewer_v2 PRIVATE Qt6::OpenGLWidgets)
 
 set_target_properties(3DViewer_v2 PROPERTIES

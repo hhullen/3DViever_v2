@@ -52,19 +52,18 @@ void MainWindow::GetScreenShotSlot() {
 
 void MainWindow::GetGifSlot() {
     qDebug() << "GIF" << screen_cap_->get_media_path();
-    ScreenRecorder recorder;
-    if (!screen_cap_->get_media_path().isEmpty() && !thread_.isRunning()) {
-  //    recording = true;
-  //    miliseconds = 0;
-  //    gif = new QGifImage;
-  //    frame = new QImage();
-  //    time = new QTimer();
-  //    get_media_name(&file_name);
-  //    file_name.append(".gif");
-  //    connect(time, SIGNAL(timeout()), this, SLOT(add_gif_frame()));
-  //    time->start(100);
-  //    glview->show_message("Recording in progress...", 1000);
-    }
+//    if (!screen_cap_->get_media_path().isEmpty() && !thread_->isRunning()) {
+//        QString file_name;
+//        GetMediaName(&file_name, screen_cap_->get_media_path());
+//        file_name.append(".gif");
+//        thread_ = new QThread();
+//        recorder_ = new ScreenRecorder(ogl_view_, file_name);
+//        recorder_->moveToThread(thread_);
+//        connect(thread_, &QThread::started, recorder_, &ScreenRecorder::Record);
+//        connect(recorder_, &ScreenRecorder::FinishedSignal, thread_, &QThread::terminate);
+//        delete recorder_;
+//        delete thread_;
+//    }
 }
 
 void MainWindow::AddGifFrame() {
