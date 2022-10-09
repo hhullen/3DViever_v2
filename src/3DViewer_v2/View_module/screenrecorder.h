@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QMainWindow>
 #include <QTimer>
-#include "View_module/gifimage/qgifimage.h"
+#include "gifimage/qgifimage.h"
 #include "View_module/oglview.h"
 
 namespace S21 {
@@ -13,8 +13,11 @@ class ScreenRecorder : public QObject
 {
     Q_OBJECT
 public:
-    explicit ScreenRecorder(OGLview *screen, QString file_name, QObject *parent = nullptr);
+    explicit ScreenRecorder(QObject *parent = nullptr);
     void Record();
+
+    void set_file_name(QString file_name);
+    void set_screen_to_record(OGLview *screen);
 
 signals:
     void FinishedSignal();

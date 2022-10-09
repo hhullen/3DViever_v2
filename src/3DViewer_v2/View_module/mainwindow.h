@@ -8,6 +8,7 @@
 #include <QSettings>
 #include <QThread>
 
+#include "gifimage/qgifimage.h"
 #include "ptransform.h"
 #include "viewsetup.h"
 #include "screencap.h"
