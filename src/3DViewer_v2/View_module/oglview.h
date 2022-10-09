@@ -9,6 +9,7 @@
 #include <QOpenGLWidget>
 #include <QTimer>
 #include <vector>
+
 #include "View_module/enum_parameters.h"
 using std::vector;
 
@@ -24,7 +25,7 @@ class OGLview : public QOpenGLWidget, public QOpenGLFunctions {
  public:
   explicit OGLview(QWidget *parent = nullptr);
   ~OGLview();
-    void DrawModel();
+  void DrawModel();
   void ShowEventMessage(QString message, int delay);
   void set_key_spcace_state(bool state);
   void set_projection_state(bool state);
@@ -49,7 +50,7 @@ class OGLview : public QOpenGLWidget, public QOpenGLFunctions {
   void set_model_indices_vector(const vector<unsigned int> *vector);
   void set_model_facets_amount(unsigned int facets);
 
-signals:
+ signals:
   void PositionUpdatedSignal();
 
  private slots:
@@ -60,45 +61,45 @@ signals:
   void ClearMessageSlot();
 
  private:
-    Ui::OGLview *ui_;
-    QTimer *timer_;
-    QCursor new_cursor_;
-    QPoint mouse_now_;
-    bool key_space_ = false;
-    bool left_mouse_button_ = false;
-    bool new_model_loaded_ = false;
-    bool projection_type_changed_ = false;
+  Ui::OGLview *ui_;
+  QTimer *timer_;
+  QCursor new_cursor_;
+  QPoint mouse_now_;
+  bool key_space_ = false;
+  bool left_mouse_button_ = false;
+  bool new_model_loaded_ = false;
+  bool projection_type_changed_ = false;
 
-    QColor edges_color_;
-    QColor vertexes_color_;
-    QColor background_color_;
-    ProjectionType projection_type_;
-    EdgeStyle edges_style_;
-    VertexStyle vertexes_style_;
-    int edges_size_;
-    int vertexes_size_;
-    double position_x_;
-    double position_y_;
-    double position_z_;
-    double angle_x_;
-    double angle_y_;
-    double angle_z_;
-    double scale_;
-    double start_z_position_;
-    double axis_scale_;
-    float screenRatio_;
-    int window_w_;
-    int window_h_;
-    double fov_;
-    double dx_move_;
-    double dy_move_;
-    double dx_rotate_;
-    double dy_rotate_;
-    double far_dist_;
+  QColor edges_color_;
+  QColor vertexes_color_;
+  QColor background_color_;
+  ProjectionType projection_type_;
+  EdgeStyle edges_style_;
+  VertexStyle vertexes_style_;
+  int edges_size_;
+  int vertexes_size_;
+  double position_x_;
+  double position_y_;
+  double position_z_;
+  double angle_x_;
+  double angle_y_;
+  double angle_z_;
+  double scale_;
+  double start_z_position_;
+  double axis_scale_;
+  float screenRatio_;
+  int window_w_;
+  int window_h_;
+  double fov_;
+  double dx_move_;
+  double dy_move_;
+  double dx_rotate_;
+  double dy_rotate_;
+  double far_dist_;
 
-    const vector<double> *vertexes_;
-    const vector<unsigned int> *indices_;
-    unsigned int facets_n_;
+  const vector<double> *vertexes_;
+  const vector<unsigned int> *indices_;
+  unsigned int facets_n_;
 
   void initializeGL() override;
   void resizeGL(int w, int h) override;
@@ -115,6 +116,6 @@ signals:
   void IncreaseAngle(double *angle, double dr);
 };
 
-}
+}  // namespace S21
 
 #endif  // OGLVIEW_H

@@ -30,10 +30,6 @@ TEST(loader_test, uploading_cube) {
   const vector<double> *vert = m.get_vertexes_vector();
   const vector<unsigned int> *indi = m.get_indices_vector();
   const double *data = vert->data();
-
-  for (int i = 0; i < vert->capacity(); i += 3) {
-    std::cout << data[i] << ", " << data[i + 1] << ", " << data[i + 2] << ",\n";
-  }
 }
 
 TEST(loader_test, uploading_million) {

@@ -4,8 +4,9 @@
 #include <QDesktopServices>
 #include <QFileDialog>
 #include <QRegularExpression>
-#include <QWidget>
 #include <QSettings>
+#include <QWidget>
+
 #include "enum_parameters.h"
 
 namespace Ui {
@@ -20,8 +21,8 @@ class ScreenCap : public QWidget {
  public:
   explicit ScreenCap(QWidget *parent = nullptr);
   ~ScreenCap();
-    QString get_media_path();
-    ScreenshotFile get_screenshot_type();
+  QString get_media_path();
+  ScreenshotFile get_screenshot_type();
 
  signals:
   void TakeScreenshotSignal();
@@ -46,6 +47,6 @@ class ScreenCap : public QWidget {
   void ConnectSignalSlot();
 };
 
-}
+}  // namespace S21
 
 #endif  // SCREENCAP_H

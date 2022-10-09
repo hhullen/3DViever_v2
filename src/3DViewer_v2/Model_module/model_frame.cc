@@ -40,13 +40,13 @@ const vector<unsigned int> *ModelFrame::get_indices_vector() {
   return &facets_.indices;
 }
 
-bool ModelFrame::UploadModel(string file_path) {
+bool ModelFrame::UploadModel(const string &file_path) {
   bool returnable = false;
   thread *vertexes_thread;
   thread *facets_thread;
 
   RemoveModel();
-  file_path_ = &file_path;
+  file_path_ = file_path;
   vertexes_thread = new thread(&ModelFrame::UploadVertexes, this, &vertexes_);
   facets_thread = new thread(&ModelFrame::UploadFacets, this, &facets_);
   vertexes_thread->join();
@@ -69,7 +69,7 @@ void ModelFrame::UploadVertexes(Vertexes *data) {
   ifstream file;
   string line;
 
-  file.open(*file_path_);
+  file.open(file_path_);
   if (file.is_open()) {
     while (!getline(file, line, '\n').eof()) {
       ReadVertex(*data, line);
@@ -115,7 +115,7 @@ void ModelFrame::UploadFacets(Facets *data) {
   string line;
   unsigned int first_index = 0;
 
-  file.open(*file_path_);
+  file.open(file_path_);
   if (file.is_open()) {
     while (!getline(file, line, '\n').eof()) {
       if (line[0] == 'f' && line[1] == ' ') {

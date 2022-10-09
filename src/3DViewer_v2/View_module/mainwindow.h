@@ -8,13 +8,13 @@
 #include <QSettings>
 #include <QThread>
 
-#include "gifimage/qgifimage.h"
-#include "ptransform.h"
-#include "viewsetup.h"
-#include "screencap.h"
 #include "Controller_module/viewer_controller.h"
 #include "Model_module/model_frame.h"
 #include "View_module/oglview.h"
+#include "gifimage/qgifimage.h"
+#include "ptransform.h"
+#include "screencap.h"
+#include "viewsetup.h"
 using S21::ModelFrame;
 using S21::ViewerController;
 

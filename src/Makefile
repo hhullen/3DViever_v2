@@ -11,7 +11,7 @@ STD=-std=c++17
 TEST_FLAGS=-lgtest -pthread
 CLANG_FILE=.clang-format
 CLANG_FILE_WAY=../materials/linters/$(CLANG_FILE)
-CHECK_FILES=$(MODEL_PATH)/*.cc $(MODEL_PATH)/*.h $(CONTROLLER_PATH)/*.cc $(CONTROLLER_PATH)/*.h $(VIEV_PATH)/*.cc $(VIEV_PATH)/*.h $(TEST_PATH)/*.cc $(TEST_PATH)/*.h
+CHECK_FILES=$(MODEL_PATH)/*.cc $(MODEL_PATH)/*.h $(CONTROLLER_PATH)/*.cc $(CONTROLLER_PATH)/*.h $(VIEV_PATH)/*.cc $(VIEV_PATH)/*.h $(TEST_PATH)/*.cc
 CPPCH_SETUP=--enable=warning,performance,portability  -v --language=c++ -$(STD)
 VALGRIND_SETUP=--tool=memcheck --leak-check=full --show-leak-kinds=all
 BUILD_DIR=../build

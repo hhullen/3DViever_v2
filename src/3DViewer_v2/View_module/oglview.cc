@@ -4,7 +4,8 @@
 
 namespace S21 {
 
-OGLview::OGLview(QWidget *parent) : QOpenGLWidget(parent), ui_(new Ui::OGLview) {
+OGLview::OGLview(QWidget *parent)
+    : QOpenGLWidget(parent), ui_(new Ui::OGLview) {
   ui_->setupUi(this);
   new_cursor_.setShape(Qt::OpenHandCursor);
   setCursor(new_cursor_);
@@ -12,112 +13,103 @@ OGLview::OGLview(QWidget *parent) : QOpenGLWidget(parent), ui_(new Ui::OGLview) 
 
   timer_ = new QTimer(this);
   connect(timer_, SIGNAL(timeout()), this, SLOT(ClearMessageSlot()));
+  update();
 }
 
 OGLview::~OGLview() { delete ui_; }
 
-void OGLview::set_key_spcace_state(bool state) {
-    key_space_ = state;
-}
+void OGLview::set_key_spcace_state(bool state) { key_space_ = state; }
 
 void OGLview::set_projection_state(bool state) {
-    projection_type_changed_ = state;
+  projection_type_changed_ = state;
 }
 
 void OGLview::set_edges_color(QColor color) {
-    edges_color_ = color;
+  edges_color_ = color;
+  update();
 }
 
 void OGLview::set_vertexes_color(QColor color) {
-    vertexes_color_ = color;
+  vertexes_color_ = color;
+  update();
 }
 
 void OGLview::set_background_color(QColor color) {
-    background_color_ = color;
+  background_color_ = color;
+  update();
 }
 
 void OGLview::set_projection_type(ProjectionType type) {
-    projection_type_ = type;
+  projection_type_ = type;
 }
 
-void OGLview::set_edges_style(EdgeStyle style) {
-    edges_style_ = style;
-}
+void OGLview::set_edges_style(EdgeStyle style) { edges_style_ = style; }
 
-void OGLview::set_vertexes_style(VertexStyle style) {
-    vertexes_style_ = style;
-}
+void OGLview::set_vertexes_style(VertexStyle style) { vertexes_style_ = style; }
 
-void OGLview::set_edges_size(int size){
-    edges_size_ = size;
-}
+void OGLview::set_edges_size(int size) { edges_size_ = size; }
 
-void OGLview::set_vertexes_size(int size) {
-    vertexes_size_ = size;
-}
+void OGLview::set_vertexes_size(int size) { vertexes_size_ = size; }
 
 void OGLview::set_position(double x, double y, double z) {
-    position_x_ = x;
-    position_y_ = y;
-    position_z_ = z;
+  position_x_ = x;
+  position_y_ = y;
+  position_z_ = z;
 }
 
 void OGLview::set_angle(double x, double y, double z) {
-    angle_x_ = x;
-    angle_y_ = y;
-    angle_z_ = z;
+  angle_x_ = x;
+  angle_y_ = y;
+  angle_z_ = z;
 }
 
-void OGLview::set_scale(double scale) {
-    scale_ = scale;
-}
+void OGLview::set_scale(double scale) { scale_ = scale; }
 
 void OGLview::get_position(double *x, double *y, double *z) {
-    if (x) {
-        *x = position_x_;
-    }
-    if (y) {
-        *y = position_y_;
-    }
-    if (z) {
-        *z = position_z_;
-    }
+  if (x) {
+    *x = position_x_;
+  }
+  if (y) {
+    *y = position_y_;
+  }
+  if (z) {
+    *z = position_z_;
+  }
 }
 
 void OGLview::get_angle(double *x, double *y, double *z) {
-    if (x) {
-        *x = angle_x_;
-    }
-    if (y) {
-        *y = angle_y_;
-    }
-    if (z) {
-        *z = angle_z_;
-    }
+  if (x) {
+    *x = angle_x_;
+  }
+  if (y) {
+    *y = angle_y_;
+  }
+  if (z) {
+    *z = angle_z_;
+  }
 }
 
-double OGLview::get_scale() {
-    return scale_;
-}
+double OGLview::get_scale() { return scale_; }
 
 void OGLview::set_model_vertexes_vector(const std::vector<double> *vector) {
-    vertexes_ = vector;
+  vertexes_ = vector;
 }
 
-void OGLview::set_model_indices_vector(const std::vector<unsigned int> *vector) {
-    indices_ = vector;
+void OGLview::set_model_indices_vector(
+    const std::vector<unsigned int> *vector) {
+  indices_ = vector;
 }
 
 void OGLview::set_model_facets_amount(unsigned int facets) {
-    facets_n_ = facets;
+  facets_n_ = facets;
 }
 
 void OGLview::DrawModel() {
-    if (vertexes_ && indices_) {
-        new_model_loaded_ = true;
-        projection_type_changed_ = true;
-        QOpenGLWidget::update();
-    }
+  if (vertexes_ && indices_) {
+    new_model_loaded_ = true;
+    projection_type_changed_ = true;
+    QOpenGLWidget::update();
+  }
 }
 
 void OGLview::initializeGL() {
@@ -138,14 +130,14 @@ void OGLview::resizeGL(int w, int h) {
 void OGLview::paintGL() {
   glClearColor(background_color_.redF(), background_color_.greenF(),
                background_color_.blueF(), 1.0f);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   if (vertexes_ && indices_) {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (projection_type_changed_) {
-        SetProjectionType();
+      SetProjectionType();
     }
     SetModelPosition();
     if (new_model_loaded_) {
-        GetVertexesBuffer();
+      GetVertexesBuffer();
     }
     glEnableClientState(GL_VERTEX_ARRAY);
     DrawPoints();
@@ -155,12 +147,12 @@ void OGLview::paintGL() {
 }
 
 void OGLview::SetDefaulValues() {
-    vertexes_ = nullptr;
-    indices_ = nullptr;
-    far_dist_ = 30000;
-    fov_ = 30;
-    axis_scale_ = 2;
-    start_z_position_ = 2;
+  vertexes_ = nullptr;
+  indices_ = nullptr;
+  far_dist_ = 30000;
+  fov_ = 30;
+  axis_scale_ = 2;
+  start_z_position_ = 2;
 }
 
 void OGLview::GetVertexesBuffer() {
@@ -189,7 +181,7 @@ void OGLview::DrawPoints() {
   glColor3d(vertexes_color_.redF(), vertexes_color_.greenF(),
             vertexes_color_.blueF());
   if (vertexes_style_ != VertexStyle::NONE) {
-      glDrawArrays(GL_POINTS, 0, vertexes_->size() / 3);
+    glDrawArrays(GL_POINTS, 0, vertexes_->size() / 3);
   }
 }
 
@@ -202,23 +194,22 @@ void OGLview::DrawLines() {
   }
   glLineWidth(edges_size_);
   glColor3d(edges_color_.redF(), edges_color_.greenF(), edges_color_.blueF());
-  glDrawElements(GL_LINES, indices_->size(), GL_UNSIGNED_INT,
-                 indices_->data());
+  glDrawElements(GL_LINES, indices_->size(), GL_UNSIGNED_INT, indices_->data());
 }
 
 void OGLview::SetProjectionType() {
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   if (projection_type_ == ProjectionType::PERSPECTIVE) {
-    glFrustum(-axis_scale_ * screenRatio_, axis_scale_ * screenRatio_, -axis_scale_,
-              axis_scale_, 3, far_dist_);
+    glFrustum(-axis_scale_ * screenRatio_, axis_scale_ * screenRatio_,
+              -axis_scale_, axis_scale_, 3, far_dist_);
     glTranslated(0, 0, -start_z_position_);
   } else if (projection_type_ == ProjectionType::ORTHOGONAL) {
-    glOrtho(-axis_scale_ * screenRatio_, axis_scale_ * screenRatio_, -axis_scale_,
-            axis_scale_, 3, far_dist_);
+    glOrtho(-axis_scale_ * screenRatio_, axis_scale_ * screenRatio_,
+            -axis_scale_, axis_scale_, 3, far_dist_);
     glTranslated(0, 0, -start_z_position_);
   }
-    projection_type_changed_ = false;
+  projection_type_changed_ = false;
 }
 
 void OGLview::ShowEventMessage(QString message, int delay) {
@@ -305,5 +296,4 @@ void OGLview::IncreaseAngle(double *angle, double dr) {
   }
 }
 
-}
-
+}  // namespace S21

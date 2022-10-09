@@ -25,7 +25,7 @@ class ModelFrame {
  public:
   ModelFrame();
   ~ModelFrame();
-  bool UploadModel(string file_path);
+  bool UploadModel(const string &file_path);
   void RemoveModel();
 
   unsigned int get_vertexes_amount();
@@ -91,7 +91,7 @@ class ModelFrame {
     vector<unsigned int> indices;
   } facets_;
 
-  string *file_path_;
+  string file_path_;
 
   void UploadVertexes(Vertexes *data);
   void ReadVertex(Vertexes &data, string &line);
