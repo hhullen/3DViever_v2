@@ -5,7 +5,7 @@
 
 The application is to draw 3d models in wireframe view (just points and lines). The only one model can be loaded at the one time. As well, it is possible to rotate, move, scale model by 3 axes (X, Y and Z), setup points ad lines colors, sizes and type (round/square for points and solid/stipple for lines), take a screenshot and GIF animation recording for 5 seconds.
 
-The application developed in C language of C11 standard using GCC compiler. As a GUI creation technology chosen QT6 library with C++ underneath. The application source code located in the src folder and can be built with Makefile which contains standard set of targets for GNU-programs: all, install, uninstall, clean, dvi, dist, tests, gcov_report.
+The application developed in C++ language of C++17 standard using G++ compiler. As a GUI creation technology chosen QT6 library with C++ underneath. The application source code located in the src folder and can be built with Makefile which contains standard set of targets for GNU-programs: all, install, uninstall, clean, dvi, dist, tests, gcov_report.
 
 ## Interface
 
