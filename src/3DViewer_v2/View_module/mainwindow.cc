@@ -45,7 +45,7 @@ void MainWindow::GetScreenShotSlot() {
       img.save(file_name, "BMP");
     }
     ogl_view_->ShowEventMessage(
-        "Screenshot sved to: " + screen_cap_->get_media_path(), 3000);
+        "Screenshot saved to: " + screen_cap_->get_media_path(), 3000);
   }
 }
 
@@ -73,7 +73,8 @@ void MainWindow::AddGifFrame() {
   if (miliseconds_ >= 5000) {
     time_->stop();
     gif_->save(file_name_);
-    ogl_view_->ShowEventMessage("Gif file saved", 3000);
+    ogl_view_->ShowEventMessage(
+        "Gif saved to: " + screen_cap_->get_media_path(), 3000);
     recording_ = false;
     delete time_;
     delete frame_;

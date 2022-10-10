@@ -144,6 +144,10 @@ void OGLview::SetDefaulValues() {
   fov_ = 30;
   axis_scale_ = 2;
   start_z_position_ = 2;
+  key_space_ = false;
+  left_mouse_button_ = false;
+  new_model_loaded_ = false;
+  projection_type_changed_ = false;
 }
 
 void OGLview::GetVertexesBuffer() {

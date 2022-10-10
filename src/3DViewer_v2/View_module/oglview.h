@@ -65,10 +65,10 @@ class OGLview : public QOpenGLWidget, public QOpenGLFunctions {
   QTimer *timer_;
   QCursor new_cursor_;
   QPoint mouse_now_;
-  bool key_space_ = false;
-  bool left_mouse_button_ = false;
-  bool new_model_loaded_ = false;
-  bool projection_type_changed_ = false;
+  bool key_space_;
+  bool left_mouse_button_;
+  bool new_model_loaded_;
+  bool projection_type_changed_;
 
   QColor edges_color_;
   QColor vertexes_color_;
