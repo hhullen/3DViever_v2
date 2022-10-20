@@ -12,8 +12,10 @@ The application developed in C++ language of C++17 standard using G++ compiler. 
 ### The application interface includes:
 
 1. View port: The main field of window where 3d model is to draw. Open new model can be executed by short-key (command + O) or from menubar (File -> Open new file).
+![main_view](img/main_view.png "View port")
 
 2. Steer panel: To open it is possible by short-key (commad + P) or from the menubar (View -> Steer panel). Steer panel may contains 3 widgets to manage model drawn. To manage these widgets it is possible by menubar. View -> Transform (command + 1) - to manage widget to steer model position in view port. View -> View setup (command + 2) - to manage widget to steer model style. View -> Screen (command + 3) capture - to manage widget to take screenshot or record a GIF. Steer panel implemented as dock-widget, so there is possibility to undock it from main window and move around display.
+![panel](img/panel.png "Steer panel")
 
 ### Steering model by mouse: 
 
